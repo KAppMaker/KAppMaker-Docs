@@ -13,10 +13,12 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://kappmaker.com',
+  url: 'https://kappmaker.github.io/',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/docs/',
+  baseUrl: '/KAppMaker-Docs/',
+  // baseUrl: '/docs/',
+
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
