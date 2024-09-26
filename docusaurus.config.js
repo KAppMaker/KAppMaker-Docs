@@ -88,7 +88,7 @@ const config = {
           
 
           // Home link
-          { href: '/', label: 'Home', position: 'right' },
+          { href: 'https://kappmaker.com/', label: 'Home', position: 'right' },
           // Docs link
           
           
