@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Push Notification
 
-KAppMaker supports push notifications through Firebase Cloud Messaging (FCM) for both Android and iOS platforms. This section guides you through the process of setting up push notifications in your app.
+KAppMaker supports push notifications through Firebase Cloud Messaging (FCM) for both Android and iOS platforms. It uses [KMPNotifier](https://github.com/mirzemehdi/KMPNotifier) library. This section guides you through the process of setting up push notifications in your app.
 
 ## Step 1: Create a Firebase Project
 
