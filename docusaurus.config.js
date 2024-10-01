@@ -76,7 +76,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
-      image: 'img/docusaurus-social-card.jpg',
+      image: 'img/facebook-card.png',
       navbar: {
         title: 'KAppMaker',
         logo: {
