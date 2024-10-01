@@ -1,41 +1,5 @@
-# Website
+# KAppMaker – Kotlin Multiplatform Mobile App Boilerplate for Android and iOS
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+KAppMaker is a Kotlin Multiplatform + Compose Multiplatform boilerplate code designed to make mobile app development easier and faster for Android and iOS. It provides developers with essential pre-built features, such as user authentication, in-app purchases, push notifications, UI components, screen generation, and more reducing setup time and allowing faster app creation.
 
-### Installation
-
-```
-$ yarn
-```
-
-### Local Development
-
-```
-$ yarn start
-```
-
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
-
-### Build
-
-```
-$ yarn build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-### Deployment
-
-Using SSH:
-
-```
-$ USE_SSH=true yarn deploy
-```
-
-Not using SSH:
-
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+Documentation is available at [https://docs.kappmaker.com](https://docs.kappmaker.com) for [KAppMaker](https://kappmaker.com/).
