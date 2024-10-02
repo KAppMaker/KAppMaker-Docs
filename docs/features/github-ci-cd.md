@@ -51,7 +51,7 @@ openssl rand -base64 16 | pbcopy
 For more information on configuring the encryption key, refer to the [Gradle documentation](https://docs.gradle.org/8.6/userguide/configuration_cache.html#config_cache:secrets:configuring_encryption_key)
 
 #### Android Keystore
-The keystore and properties files are required to sign the Android app when you need to make release version of the app. For keystore creation, make sure to check [Android Keystore section](../production/android).
+The keystore and properties files are required to sign the Android app when you need to make release version of the app. For keystore creation, make sure to check [Android Keystore section](../../production/android).
 
 - **Name**: `SIGNING_KEY_STORE_FILE_BASE64`
 - **Value**: Run the following command to generate and copy value for this key:
