@@ -80,6 +80,14 @@ add the following code snippet in `initializeNotification` method to retrieve th
      - In the Firebase Console, go to your project settings.
      - Under the “Cloud Messaging” tab, upload your APNs key that you generated from the Apple Developer portal.
 
+3. **Ensure Team ID is Set in Signing & Capabilities**
+
+   - In Xcode, open your project and select your target.
+   - Go to the **Signing & Capabilities** tab.
+   - Under the "Team" section, make sure the correct **Team ID** is selected. This ensures your app is properly signed and linked to your Apple Developer account.
+   - The Team ID can be found in your [Apple Developer Account](https://developer.apple.com/account/).
+   - Ensure this matches the Team ID associated with the APNs key you generated earlier and uploaded to Firebase.
+
 
 ## Conclusion
 
