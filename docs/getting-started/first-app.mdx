@@ -6,28 +6,21 @@ sidebar_position: 2
 
 In 5 minutes you will have both Android and iOS app. Once you have set up your environment according to the requirements, you can proceed to create your first app using KAppMaker. Follow the steps below for initial configuration:
 
-### 1. Clone or Fork the Repository
+### 1. Fork or Clone the Repository
 
-Start by cloning or forking the KAppMaker repository to your local machine:
+Start by cloning or forking the KAppMaker repository to your local machine (ensure that the new repo has private access):
 
+SSH:
 ```
-git clone https://github.com/KAppMaker/KAppMaker
+git clone git@github.com:KAppMaker/KAppMaker.git
 ```
-
-If you fork the repository, ensure that the new repo has private access.
-
-### 2. Keeping Your Repository Up to Date
-
-To keep your repository updated with the latest changes, follow these commands:
-
+or HTTPS:
 ```
-git remote add upstream https://github.com/KAppMaker/KAppMaker
-git fetch upstream
-git merge upstream/main
+git clone https://github.com/KAppMaker/KAppMaker.git
 ```
 
 
-### 3. Open In Android Studio
+### 2. Open In Android Studio
 
 After cloning the repository, open it in Android Studio. On the first attempt, the project may fail to open due to missing keys related to authentication and subscription. In the `local.properties` file, add the following keys with dummy values:
 
@@ -37,11 +30,11 @@ REVENUECAT_ANDROID_API_KEY=test
 REVENUECAT_IOS_API_KEY=test
 ```
 
-### 4. Run Android App
+### 3. Run Android App
 
 After adding the above keys, sync the project again. Once the sync is complete, you should be able to run the Android app. 
 
-### 5. Set Up the iOS App
+### 4. Set Up the iOS App
 
 If you successfully launch the Android app, proceed to set up the iOS app. Navigate to the `iosApp` folder and install the Pod dependencies:
 
@@ -50,16 +43,16 @@ cd iosApp
 pod install --repo-update
 ```
 
-### 6. Open the iOS Project in Xcode
+### 5. Open the iOS Project in Xcode
 
 Open the project in Xcode by using the `.xcworkspace` file (not the `.xcodeproj` file) from iosApp folder. Once opened, run the app in Xcode. At this point, you should be able to run both the Android and iOS apps.
 
-### 7. Congratulations!
+### 6. Congratulations!
 
 Congratulations! In just 5 minutes, you have set up both the Android and iOS apps. Your application already has authentication, notifications, and in-app purchase features configured (almost).
 
 
-### 8. Change Application/Bundle Id and Name
+### 7. Change Application/Bundle Id and Name
 Once you have successfully set up both the Android and iOS applications, you may want to change the application name and bundle ID to reflect your project. Follow the steps below to update these values:
 
 1. Open `gradle/scripts/refactorPackage.gradle.kts`.
@@ -85,6 +78,17 @@ It is advisable to create a backup of your project before proceeding with the ne
 Alternatively, you can choose this Gradle task from the Gradle tasks window in Android Studio under the composeApp -> tasks-> other -> section.
 
 4. Change gradle configuration cache to true. Navigate to the `gradle.properties` file in the root of your project. And set `org.gradle.configuration-cache=true`. Sync Gradle files once again to ensure all changes are applied correctly.
+
+
+### 8. Keeping Your Repository Up to Date
+
+To keep your repository updated with the latest changes, follow these commands:
+
+```
+git remote add upstream git@github.com:KAppMaker/KAppMaker.git
+git fetch upstream
+git merge upstream/main
+```
 
 ### 9. Further Configuration
 
