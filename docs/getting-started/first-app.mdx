@@ -82,9 +82,11 @@ Alternatively, you can choose this Gradle task from the Gradle tasks window in A
 
 ### 8. Keeping Your Repository Up to Date
 
-To keep your repository updated with the latest changes, follow these commands:
+To keep your repository updated with the latest changes, 
+first set your own github repository as origin , then merge changes from KAppMaker repository:
 
 ```
+git remote set-url origin <new-url> (YOUR GITHUB REPO)
 git remote add upstream git@github.com:KAppMaker/KAppMaker.git
 git fetch upstream
 git merge upstream/main
