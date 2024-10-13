@@ -24,8 +24,8 @@ The images below illustrates the high-level architecture of the KAppMaker projec
 
 The KAppMaker architecture consists of three main layers/packages (domain, data, presentation):
 
-1. **Domain**: Contains business logic, domain models and exceptions.
-2. **Data**: Manages data sources, including user preferences and remote APIs and repositories.
-3. **Presentation**: Contains UI components, screens, theme (color, font). Each screen has its own UiState, UiEvent (like user actions), Composable Screen and Navigation for that screen.
+1. **[Domain](domain)**: Contains business logic, domain models and exceptions.
+2. **[Data](data)**: Manages data sources, including user preferences and remote APIs and repositories.
+3. **[Presentation](presentation)**: Contains UI components, screens, theme (color, font). Each screen has its own UiState, UiEvent (like user actions), Composable Screen and Navigation for that screen.
 4. **Root**: This contains entry point for the application, and initialization. `AppInitializer` contains initialization and dependency injection setup.
 5. **Util**: Utility classes, extensions.
