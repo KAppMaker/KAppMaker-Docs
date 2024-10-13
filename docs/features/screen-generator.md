@@ -56,3 +56,4 @@ The following files will be generated in the `presentation/screens/yourscreennam
    - Manages Navigation for the screen.
 
 
+**Note:** Esure that the DI setup is done in the `AppInitializer` within the `presentationModule`, for example, by including `factoryOf(::YourScreenNameUiStateHolder)` to handle dependencies correctly for new created UiStateHolder.
