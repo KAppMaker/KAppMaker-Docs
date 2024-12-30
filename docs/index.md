@@ -17,5 +17,8 @@ KAppMaker is a Kotlin Multiplatform + Compose Multiplatform boilerplate starter 
 - **Local Storage**: Local storage management for offline capabilities.
 - **User Preferences**: Manage user settings and preferences with ease.
 - **UI Components & Navigation**: Pre-built UI components and a navigation system for app flow.
+- **AI Integration**: Integration with Replicate AI models, Open AI Text/Image Analyzing, DALLE-2/DALLE-3 Image Generation. Secure API Key using Firebase Cloud Functions.
+- **App Landing Page Tempalate**: Pre-built UI components and a navigation system for app flow. Can be deployed into Firebase Hosting.
+
 
 
