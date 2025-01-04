@@ -75,7 +75,7 @@ The AI backend functions are pre-configured to support integration with popular 
 
 ### API Key Management
 
-To securely store and access your API keys, you can use **Google Cloud Secret Manager**. This is a secure and scalable way to manage sensitive information like API keys. Below are the steps to retrieve and store your keys securely.
+To securely store and access your API keys, you can use [**Google Cloud Secret Manager**](https://console.cloud.google.com/security/secret-manager). This is a secure and scalable way to manage sensitive information like API keys. Below are the steps to retrieve and store your keys securely.
 
 #### Steps to Obtain API Keys
 
@@ -89,10 +89,10 @@ To securely store and access your API keys, you can use **Google Cloud Secret Ma
 
 #### Saving API Keys with Google Cloud Secret Manager
 
-Once you have your API keys, you can securely store them in Google Cloud Secret Manager.
+Once you have your API keys, you can securely store them in [Google Cloud Secret Manager](https://console.cloud.google.com/security/secret-manager).
 
 1. **Enable Secret Manager**:
-   - In the Google Cloud Console, go to the **Secret Manager** page and enable the API.
+   - In the Google Cloud Console, go to the [**Secret Manager**](https://console.cloud.google.com/security/secret-manager) page and enable the API.
    
 2. **Create Secrets**:
    - Click **Create Secret** and enter the name for the secret (e.g., `OPENAI_API_KEY` or `REPLICATE_API_KEY`).
