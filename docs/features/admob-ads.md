@@ -69,11 +69,6 @@ adsManager.interstitialAdLoader.load()
 _NOTE: The reason is `rewardedAdDisplayer` or `interstitialAdDisplayer` is nullable, because it can be configured to be allowed or not allowed. For example, in case `IS_ADS_ENABLED` value is `false` then `rewardedAdDisplayer` and  `interstitialAdDisplayer` will be `null`, so it will not be possible to show ads.  You can check `AdMobComposableFunctions` for more details._
 
 
-<video width="100%" controls>
-  <source src="/img/admob-ads.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
 
 
 
