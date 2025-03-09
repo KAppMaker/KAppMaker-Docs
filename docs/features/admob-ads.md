@@ -69,6 +69,9 @@ adsManager.interstitialAdLoader.load()
 _NOTE: The reason is `rewardedAdDisplayer` or `interstitialAdDisplayer` is nullable, because it can be configured to be allowed or not allowed. For example, in case `IS_ADS_ENABLED` value is `false` then `rewardedAdDisplayer` and  `interstitialAdDisplayer` will be `null`, so it will not be possible to show ads.  You can check `AdMobComposableFunctions` for more details._
 
 
+![Google Admob Ads](/img/admob_ads.png)
+
+
 
 
 
