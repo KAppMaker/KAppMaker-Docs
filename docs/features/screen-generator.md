@@ -36,7 +36,7 @@ The following files will be generated in the `presentation/screens/yourscreennam
 
 - YourScreenNameScreen.kt
 - YourScreenNameScreenRoute.kt
-- YourScreenNameUiState.kt
+- YourScreenNameUiState.kt. This file will contain `UIEvent` as well.
 - YourScreenNameUiStateHolder.kt
 
 
