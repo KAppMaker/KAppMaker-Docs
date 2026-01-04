@@ -80,15 +80,19 @@ Congratulations! In just 5 minutes, you have set up both the Android and iOS app
 
 
 ### 7. Change Application/Bundle Id and Name
-Once you have successfully set up both the Android and iOS applications, you may want to change the application name and bundle ID to reflect your project. Follow the steps below to update these values:
+Once you have successfully set up both the Android and iOS applications, you may want to change the application name and bundle ID to reflect your project. 
+Run the `refactorPackage` Gradle script to update your app ID and display name. Kotlin/Java package structure (`package com.example.app`) is independent of the `applicationId` / bundle ID :
 
-1. Open `gradle/scripts/refactorPackage.gradle.kts`.
-2. Update `newApplicationBundleId` and `newApplicationName`:
 
-```kotlin
-val newApplicationBundleId = "com.company.mynewappid"
-val newApplicationName = "MyAmazingApp"
+```bash
+./gradlew refactorPackage -PnewAppId=com.example.newapp -PnewAppName=NewApp -PshouldUpdatePackageName=true
 ```
+
+**Parameters:**
+- `newAppId` (required) → Android `applicationId` / iOS bundle ID  
+- `newAppName` (required) → App display name  
+- `shouldUpdatePackageName` (optional, default `true`) → If `true`, Kotlin packages and directories are renamed to match the new app ID.  
+  If `false`, packages remain unchanged, making it easier to sync changes across multiple apps from the same codebase and avoid merge conflicts in future.
 
 :::tip Important
 
@@ -96,15 +100,8 @@ It is advisable to create a backup of your project before proceeding with the ne
 
 :::
 
-3. Sync the Gradle file and run the `refactorPackage` task.
 
-```bash
-./gradlew refactorPackage
-```
-
-Alternatively, you can choose this Gradle task from the Gradle tasks window in Android Studio under the composeApp -> tasks-> other -> section.
-
-4. Change gradle configuration cache to true. Navigate to the `gradle.properties` file in the root of your project. And set `org.gradle.configuration-cache=true`. Sync Gradle files once again to ensure all changes are applied correctly.
+Change gradle configuration cache to true. Navigate to the `gradle.properties` file in the root of your project. And set `org.gradle.configuration-cache=true`. Sync Gradle files once again to ensure all changes are applied correctly.
 
 
 ### 8. Keeping Your Repository Up to Date

@@ -32,3 +32,26 @@ What it does:
 - Updates iOS Info.plist CFBundleVersion and CFBundleShortVersionString.
 '
 ```
+
+## Create Local Data Layer
+
+The `make_local.sh` script generates a complete local data layer for a given model, including Entity, DAO, Mapper, LocalDataSource, Room implementation, In-Memory implementation, and DI bindings.
+
+### Usage
+
+`./scripts/make_local.sh ExampleModel`
+
+Run the script with the model name as a parameter. The script will create/update:
+
+- Domain model file
+- Local data layer files under `data/source/local`
+- Room database updates
+- DI bindings
+- In-Memory implementation for web
+
+### Notes
+
+- Re-running the script for the same model skips existing domain files to prevent overwriting.  
+- Automatically creates required folders and imports.  
+- Useful for quickly syncing local data layer changes across multiple apps or modules.  
+- Ensure the base package path matches your project structure.
