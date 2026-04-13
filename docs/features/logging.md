@@ -43,7 +43,7 @@ To get your Telegram Chat ID:
 
 Save your Bot Token and Chat ID in `TelegramLogger` file in `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` fields to enable sending messages.
 
-Now iff you log with error or info message, it will be sent to telegram bot that you created. 
+Now if you log with error or info message, it will be sent to the telegram bot that you created.
 `AppLogger.i("Some info message")`. You will get info in your telegram bot.
 
 

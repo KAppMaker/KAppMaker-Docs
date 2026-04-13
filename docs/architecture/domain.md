@@ -9,13 +9,19 @@ The **Domain** package contains the essential business logic and core entities o
 ![Domain Package](/img/architecture_domain.png)  
 
 
-## Model Package 
-Defines key data classes.
+## Model Package
+Defines key data classes representing core business entities:
    - **User**: Represents a user with properties like `id`, `email`, and `hasPremiumAccess`.
    - **AuthProvider**: Enum for authentication methods (e.g., GOOGLE, APPLE).
+   - **Subscription**: Represents subscription information and access levels.
+   - **GenerationOutput / GenerationInput**: Models for AI generation workflow.
+   - **CreditTransaction / CreditSystemConfig**: Models for the credit system (balance, transactions, configuration).
 
 ## Exceptions Package
 
 Contains custom exception classes that handle specific error scenarios within the application.
 
-- **UnAuthorizedException**: This exception is thrown when a user attempts to perform an operation without being logged in. When you need to perform an operation that requires user authentication, throw the *UnAuthorizedException*, then, for example, in your ViewModel, you can catch this exception and show an appropriate view to the user. This is how it's implemented in **ProfileUiStateHolder**. When the user is not authenticated, the exception is caught, and the application navigates to the sign-in screen.
+- **UnAuthorizedException**: Thrown when a user attempts to perform an operation without being logged in. In your UiStateHolder, you can catch this exception and navigate to the sign-in screen. See **ProfileUiStateHolder** for an example.
+- **PurchaseRequiredException**: Thrown when an operation requires a premium subscription that the user does not have.
+- **CreditRequiredException**: Thrown when an operation requires credits that the user does not have sufficient balance for.
+- **UserAlreadyExistsException**: Thrown when attempting to create a user that already exists.

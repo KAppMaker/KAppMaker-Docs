@@ -11,10 +11,12 @@ The project uses [Koin](https://insert-koin.io/) for Dependency Injection. DI se
 
 - **single**: Used for creating singleton instances, meaning only one instance of the class will be created and shared.
 - **factory**: Creates a new instance of the class each time it's injected.
-- **bind**: Used to define the interface or superclass that the created instance will be bound to.  
+- **bind**: Used to define the interface or superclass that the created instance will be bound to.
     Example: `singleOf(::UserPreferencesImpl) bind UserPreferences::class`
 - **singleOf**: Another way to declare a single using DSL.
 - **factoryOf**: Another way to declare a factory using DSL.
+- **viewModelOf**: Used for registering UiStateHolders (ViewModels) in the presentation module.
+    Example: `viewModelOf(::HomeUiStateHolder)`
 
 
 ## Example of DI Setup
@@ -27,7 +29,7 @@ In this project, the DI setup includes multiple modules:
   - **Singletons**: `ApplicationScope`, `UserRepository`, `UserPreferences`.
   - **Factories**: For objects like `ApiService` and `BackgroundExecutor`.
 
-- **Presentation Module**: Handles UI-related objects like `UiStateHolders` (ViewModel) for different screens such as `OnBoardingUiStateHolder`, `ProfileUiStateHolder`, and `PaywallUiStateHolder`. 
+- **Presentation Module**: Handles UI-related objects like `UiStateHolders` (ViewModel) for different screens. UiStateHolders are registered using `viewModelOf()`, for example: `viewModelOf(::OnBoardingUiStateHolder)`, `viewModelOf(::ProfileUiStateHolder)`, `viewModelOf(::PaywallUiStateHolder)`.
 
 
 ## Platform-Specific DI

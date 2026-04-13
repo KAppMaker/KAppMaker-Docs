@@ -17,12 +17,12 @@ The **ApplicationScope** class provides a `CoroutineScope` for running tasks tha
 
 ## ScreenRoute
 
-**ScreenRoute** is an interface implementing `Screen` and `JavaSerializable` from *Voyager*. It provides navigation logic and optionally allows setting a title for a screen. If a screen requires a title, you can override the `title` property.
+**ScreenRoute** is a simple interface that defines a `@Composable Content()` function. Route classes implement this interface and are annotated with `@Serializable` for type-safe navigation using [Compose Navigation](https://developer.android.com/develop/ui/compose/navigation). Each route class encapsulates its screen's navigation logic and UI composition.
 
 
 ## UiStateHolder
 
-The **UiStateHolder** interface represents a `ScreenModel` (that comes from *Voyager*) and helps manage the state of UI screens. It provides a `uiStateHolderScope` extension that gives access to the coroutine scope for UI operations.
+**UiStateHolder** is an abstract class extending `ViewModel` from `androidx.lifecycle`. It helps manage the state of UI screens. It provides a `uiStateHolderScope` extension property that delegates to `viewModelScope`, giving access to a coroutine scope for UI operations.
 
 ## UiMessage
 
@@ -50,8 +50,8 @@ The **AppLogger** is initialized at the application startup to handle centralize
 The **Constants** object holds common constants used throughout the app:
 
 - **URL_PRIVACY_POLICY** and **URL_TERMS_CONDITIONS**: Links for privacy policy and terms & conditions.
-- **PAYWALL_PREMIUM_ENTITLEMENT**: Default entitlement key for premium access is *"Premium"*.
-- **SHOW_REMOTE_PAYWALL**: A flag to toggle between remote and custom paywall screens. By default remote paywall UI is shown that can be updated from RevenueCat's dashboard.
+- **PAYWALL_PREMIUM_ACCESS**: Default entitlement/access level key for premium access is *"Premium"*.
+- **SHOW_REMOTE_PAYWALL**: A feature flag (in `FeatureFlagManager`) to toggle between remote and custom paywall screens. By default remote paywall UI is shown that can be updated from your subscription provider's dashboard or via Firebase Remote Config.
 
 ## Extensions
 

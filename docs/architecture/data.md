@@ -14,15 +14,21 @@ The **Data** package is responsible for managing data sources and provides a str
 The *Repository Package* serves as an abstraction layer between the data sources and the rest of the application. It encapsulates the logic for accessing data, ensuring that data retrieval and persistence are handled consistently across different sources, such as local databases, remote APIs, or in-memory storage.
 
 - **UserRepository**
-   - `currentUser`: A flow that emits the current user's information, managing the authentication state and premium access status.
-   - `hasPremiumAccess()`: Checks if the current user has premium access. By default it checks if the user has entitlement access for the key *"Premium"*. However, you can change this key in the `util/Constants` file to suit your application's needs.
-   - `hasEntitlementAccess(key:String)`: If you have created multiple entitlements in RevenueCat (e.g., different subscription tiers such as "Gold" and "Premium"), you can use the this method to check access to these specific entitlements. 
-   - `logOut()`: Logs the user out from both RevenueCat and Firebase.
-   - `deleteAccount()`: Deletes the user's account and logs them out.
+   - `currentUser`: A flow that emits the current user’s information, managing the authentication state and premium access status.
+   - `hasPremiumAccess()`: Checks if the current user has premium access. By default it checks if the user has entitlement access for the key *"Premium"*. However, you can change this key in the `util/Constants` file to suit your application’s needs.
+   - `hasEntitlementAccess(key:String)`: If you have created multiple entitlements (e.g., different subscription tiers such as "Gold" and "Premium"), you can use this method to check access to these specific entitlements.
+   - `logOut()`: Logs the user out from both the subscription provider and Firebase.
+   - `deleteAccount()`: Deletes the user’s account and logs them out.
+
+- **SubscriptionRepository**: Manages in-app purchase and subscription state, wrapping the subscription provider (RevenueCat or Adapty).
+
+- **GenerationRepository**: Handles AI generation workflows including uploading files, triggering generation, and caching results (in-memory + Room database).
+
+- **CreditRepository**: Manages credit balance and transactions with a configurable credit system (one-time bonuses, recurring grants).
 
 ## Source Package
 
-The **Source** component is further divided into two parts: **Preferences** and **Remote**. (Local Storage will be added soon too).
+The **Source** component is divided into multiple parts: **Preferences**, **Remote**, **Local**, and **FeatureFlag**.
 
 ### Preferences
 
@@ -39,6 +45,14 @@ The *Remote* package is responsible for making API requests and handling respons
 - **ApiService**: Manages network requests, such as sending and receiving data. For example, the `getExampleData()` method sends a POST request and retrieves data from the server.
 
 - **HttpClientFactory**: Provides a configured HTTP client, ensuring proper headers and logging for network requests, including user authentication tokens.
+
+### Local
+
+The *Local* package contains Room database entities and DAOs for local data persistence. This is available on non-web platforms (Android, iOS, JVM). See the [Local Storage](../features/local-storage.md) feature guide for setup details.
+
+### FeatureFlag
+
+Manages feature flags via Firebase Remote Config, allowing you to enable/disable features at runtime without app updates.
 
 
 ## BackgroundExecutor

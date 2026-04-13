@@ -30,7 +30,7 @@ userPreferences.putBoolean(KEY_IS_ONBOARD_SHOWN, true)
 To retrieve a boolean value indicating that the onboarding screen has been shown, use:
 
 ```kotlin
-userPreferences.getBooleadn(KEY_IS_ONBOARD_SHOWN)
+userPreferences.getBoolean(KEY_IS_ONBOARD_SHOWN)
 ```
 
 To clear all user preference use:
