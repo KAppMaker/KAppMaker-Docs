@@ -8,7 +8,7 @@ Before starting with [ **KAppMaker** ](https://kappmaker.com), ensure that you h
 
 - **Android Studio** (latest stable version recommended)
 - **Xcode** (latest version) for iOS development
-- **Kotlin 2.2.x** or later
+- **Kotlin 2.3.x** or later
 - **Java 17+** (for Android development)
 - **Git** (for cloning the repository or Github Actions for CI/CD)
 

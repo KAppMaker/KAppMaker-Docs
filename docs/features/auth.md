@@ -20,7 +20,7 @@ KAppMaker provides an easy setup for authentication using Firebase Authenticatio
 
 3. **Add Configuration Files**:
     After enabling desired sign-in methods, download firebase configuration file again.  
-   - For Android, download the `google-services.json` file and place it in the `composeApp` folder of your project.
+   - For Android, download the `google-services.json` file and place it in the `androidApp` folder of your project.
    - For iOS, download the `GoogleService-Info.plist` file and add it to the `iosApp/iosApp` folder.
 
 

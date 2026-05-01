@@ -20,7 +20,7 @@ KAppMaker supports push notifications through Firebase Cloud Messaging (FCM) for
 ## Step 2: Add Firebase Configuration Files
 
 1. **For Android**:
-   - Place the `google-services.json` file you downloaded in the `composeApp` directory of your project.
+   - Place the `google-services.json` file you downloaded in the `androidApp` directory of your project.
   
 2. **For iOS**:
    - Place the `GoogleService-Info.plist` file in the `iosApp/iosApp` folder of your project.
@@ -38,7 +38,7 @@ KAppMaker supports push notifications through Firebase Cloud Messaging (FCM) for
 
 To get the Firebase token for testing, follow these steps:
 
-1. Open your `AppInitializer` file (located at `composeApp/{packageName}/commonMain/root/`) and  
+1. Open your `AppInitializer` file (located at `shared/src/commonMain/kotlin/{packageName}/root/`) and  
 add the following code snippet in `initializeNotification` method to retrieve the token.
 
 ```kotlin

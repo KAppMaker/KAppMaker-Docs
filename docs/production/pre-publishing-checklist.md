@@ -16,7 +16,7 @@ Before publishing your app, make sure you have completed all the steps below. Th
   ```
   This updates the Android `applicationId`, iOS `bundleIdentifier`, package directories, and all related references.
 
-- [ ] **Verify Android app name** in `composeApp/src/androidMain/AndroidManifest.xml` — update the `android:label` attribute.
+- [ ] **Verify Android app name** in `androidApp/src/main/AndroidManifest.xml` — update the `android:label` attribute.
 
 - [ ] **Verify iOS bundle identifier** in `iosApp/iosApp.xcodeproj/project.pbxproj` — search for `PRODUCT_BUNDLE_IDENTIFIER`.
 
@@ -32,7 +32,7 @@ Before publishing your app, make sure you have completed all the steps below. Th
   ./scripts/update_version.sh -v 2.0.0
   ```
   This script updates all of the following in one go:
-  - **Android**: `versionCode` and `versionName` in `composeApp/build.gradle.kts`
+  - **Android**: `versionCode` and `versionName` in `androidApp/build.gradle.kts`
   - **iOS**: `CURRENT_PROJECT_VERSION` and `MARKETING_VERSION` in `iosApp/iosApp.xcodeproj/project.pbxproj`, and `CFBundleVersion` / `CFBundleShortVersionString` in `iosApp/iosApp/Info.plist`
 
 ---
@@ -43,14 +43,14 @@ Before publishing your app, make sure you have completed all the steps below. Th
 
 The easiest way to replace Android app icons is using **Android Studio**:
 
-1. Right-click on `composeApp/src/androidMain/res/` in Android Studio
+1. Right-click on `androidApp/src/main/res/` in Android Studio
 2. Select **New > Image Asset**
 3. Choose your icon source image (at least 1024x1024 recommended)
 4. Android Studio will generate all required density sizes automatically
 
 Icon files are located in:
 ```
-composeApp/src/androidMain/res/
+androidApp/src/main/res/
 ├── mipmap-hdpi/      ic_launcher.webp, ic_launcher_foreground.webp, ic_launcher_round.webp
 ├── mipmap-mdpi/      ...
 ├── mipmap-xhdpi/     ...
@@ -72,25 +72,25 @@ Use [AppIcon.co](https://www.appicon.co/) to generate all required iOS icon size
 
 ## 3. Notification Icon (Android)
 
-- [ ] Replace the notification icon at `composeApp/src/androidMain/res/drawable/ic_notification.xml`
+- [ ] Replace the notification icon at `androidApp/src/main/res/drawable/ic_notification.xml`
 - The notification icon should be a **simple monochrome vector** (single color, no complex artwork). Android uses it as a silhouette in the status bar.
 
 ---
 
 ## 4. Android Colors & Branding
 
-- [ ] Update launcher background and primary colors in `composeApp/src/androidMain/res/values/colors.xml`:
+- [ ] Update launcher background and primary colors in `androidApp/src/main/res/values/colors.xml`:
   - `ic_launcher_background` — background color for adaptive icons
   - `primary` — primary brand color (used in splash/status bar)
   - `windowBackgroundColor` — app window background color
 
-- [ ] Update dark mode colors in `composeApp/src/androidMain/res/values-night/colors.xml`
+- [ ] Update dark mode colors in `androidApp/src/main/res/values-night/colors.xml`
 
 ---
 
 ## 5. Constants Configuration
 
-Update the following fields in `composeApp/src/commonMain/.../util/Constants.kt`:
+Update the following fields in `shared/src/commonMain/.../util/Constants.kt`:
 
 - [ ] `URL_PRIVACY_POLICY` — your privacy policy URL (required for App Store & Play Store)
 - [ ] `URL_TERMS_CONDITIONS` — your terms & conditions URL
@@ -103,7 +103,7 @@ Update the following fields in `composeApp/src/commonMain/.../util/Constants.kt`
 ## 6. Firebase Setup
 
 - [ ] **Create a Firebase project** at [Firebase Console](https://console.firebase.google.com/)
-- [ ] **Download and replace** `google-services.json` at `composeApp/google-services.json` — make sure the package name matches your Android `applicationId`
+- [ ] **Download and replace** `google-services.json` at `androidApp/google-services.json` — make sure the package name matches your Android `applicationId`
 - [ ] **Download and replace** `GoogleService-Info.plist` at `iosApp/iosApp/GoogleService-Info.plist` — make sure the bundle ID matches your iOS identifier
 
 ---
@@ -253,18 +253,18 @@ See [GitHub CI/CD](../features/github-ci-cd.md) for full setup.
 
 | What | File Path |
 |------|-----------|
-| Constants (URLs, emails) | `composeApp/src/commonMain/.../util/Constants.kt` |
+| Constants (URLs, emails) | `shared/src/commonMain/.../util/Constants.kt` |
 | API keys | `MobileApp/local.properties` |
 | Subscription provider | `MobileApp/gradle.properties` |
-| Feature flags | `composeApp/src/commonMain/.../data/source/featureflag/FeatureFlagManager.kt` |
-| Android icons | `composeApp/src/androidMain/res/mipmap-*/` |
-| Android notification icon | `composeApp/src/androidMain/res/drawable/ic_notification.xml` |
-| Android colors | `composeApp/src/androidMain/res/values/colors.xml` |
-| Android manifest | `composeApp/src/androidMain/AndroidManifest.xml` |
-| Android build config | `composeApp/build.gradle.kts` |
+| Feature flags | `shared/src/commonMain/.../data/source/featureflag/FeatureFlagManager.kt` |
+| Android icons | `androidApp/src/main/res/mipmap-*/` |
+| Android notification icon | `androidApp/src/main/res/drawable/ic_notification.xml` |
+| Android colors | `androidApp/src/main/res/values/colors.xml` |
+| Android manifest | `androidApp/src/main/AndroidManifest.xml` |
+| Android build config | `androidApp/build.gradle.kts` |
 | Android keystore | `distribution/android/keystore/` |
 | iOS icons | `iosApp/iosApp/Assets.xcassets/AppIcon.appiconset/` |
 | iOS project settings | `iosApp/iosApp.xcodeproj/project.pbxproj` |
 | iOS Info.plist | `iosApp/iosApp/Info.plist` |
-| Firebase Android | `composeApp/google-services.json` |
+| Firebase Android | `androidApp/google-services.json` |
 | Firebase iOS | `iosApp/iosApp/GoogleService-Info.plist` |

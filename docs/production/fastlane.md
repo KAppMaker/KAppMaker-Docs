@@ -39,7 +39,7 @@ fastlane android first_time_build first_name:"Your Name" organization:"YourCompa
 
 **What it does:**
 1. Checks if a keystore exists at `distribution/android/keystore/` — generates one if missing
-2. Builds a release AAB via `./gradlew :composeApp:bundleRelease`
+2. Builds a release AAB via `./gradlew :androidApp:bundleRelease`
 3. Copies the AAB to `distribution/android/app-release.aab`
 
 **Note:** The first upload to Google Play Console must be done manually. After that, you can use the `playstore_release` lane.

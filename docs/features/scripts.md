@@ -19,7 +19,7 @@ Automatically increments the version code and optionally updates the version nam
 ```
 
 **What it does:**
-- Reads current Android `versionCode` and `versionName` from `composeApp/build.gradle.kts`
+- Reads current Android `versionCode` and `versionName` from `androidApp/build.gradle.kts`
 - Increments Android `versionCode` by 1
 - Reads and updates iOS `CURRENT_PROJECT_VERSION` and `MARKETING_VERSION` in `project.pbxproj`
 - Updates iOS `Info.plist` (`CFBundleVersion` and `CFBundleShortVersionString`)
