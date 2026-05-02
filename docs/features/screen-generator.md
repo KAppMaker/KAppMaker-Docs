@@ -4,20 +4,19 @@ sidebar_position: 7
 
 # Screen Generator
 
-The Screen Generator feature in KAppMaker automates the creation of new screens by generating all necessary files based on a specified screen name. This speeds up the development process by reducing boilerplate code and ensuring consistency across the application.
+Scaffold a new screen — generates the standard files **and** wires everything up so the screen is reachable end-to-end without hand-editing five files.
 
 
 ## How to Use
 
-To generate a new screen, run the Gradle task with the screen name as a parameter as below:
+Run the script with your screen name as a single argument, from the `MobileApp/` directory:
 
 ```bash
-
-./gradlew generateNewScreen -PscreenName=YourScreenName
-
+./scripts/generate_screen.sh YourScreenName
 ```
 
-Replace `YourScreenName` with the desired name for your screen (e.g., Profile). `generateNewScreen` gradle task is defined in `gradle/scripts` folder.
+Replace `YourScreenName` with the screen name (e.g., `Settings`). The script lives at `MobileApp/scripts/generate_screen.sh`.
+
 
 ## Default Values
 
@@ -29,31 +28,36 @@ The following default suffixes are used in the generation process:
 - **ViewModel Suffix**: UiStateHolder
 
 
+## What it does
 
-## File Structure
+The script generates three files in `presentation/screens/yourscreenname/`:
 
-The following files will be generated in the `presentation/screens/yourscreenname` directory:
+- `YourScreenNameScreen.kt`
+- `YourScreenNameUiState.kt` (also contains `UiEvent`)
+- `YourScreenNameUiStateHolder.kt`
 
-- YourScreenNameScreen.kt
-- YourScreenNameScreenRoute.kt
-- YourScreenNameUiState.kt. This file will contain `UIEvent` as well.
-- YourScreenNameUiStateHolder.kt
+It then patches three existing files (each insertion is idempotent — safe to re-run):
 
+| File                                       | What gets inserted                                                            |
+|--------------------------------------------|-------------------------------------------------------------------------------|
+| `presentation/navigation/Routes.kt`         | `data object YourScreenNameScreenRoute : ScreenRoute` (with `@Serializable`/`@SerialName`) |
+| `presentation/navigation/AppNavigation.kt`  | An `entry<YourScreenNameScreenRoute> { … }` block plus the screen/holder imports |
+| `root/AppInitializer.kt`                    | `viewModelOf(::YourScreenNameUiStateHolder)` plus the holder import           |
 
+The insertion points are marked in each file by a `// Add new … below — generate_screen.sh inserts here.` comment. Don't remove those markers — the script grep-checks them and warns if they're missing.
 
-## Generated Files
-
-1. **Screen Composable** (YourScreenNameScreen.kt):
-   - Defines the composable function for rendering the UI.
-
-2. **UI State Class** (YourScreenNameUiState.kt):
-   - Contains the UI state representation for the screen and UiEvent, such as click action.
-
-3. **ViewModel Class** (YourScreenNameUiStateHolder.kt):
-   - Manages the UI state and handles UI events.
-
-4. **Navigation Class** (YourScreenNameScreenRoute.kt):
-   - Manages Navigation for the screen.
+> **Note:** The previous Gradle task (`./gradlew generateNewScreen`) has been removed. Use the bash script.
 
 
-**Note:** Ensure that the DI setup is done in the `AppInitializer` within the `presentationModule`, for example, by including `viewModelOf(::YourScreenNameUiStateHolder)` to handle dependencies correctly for the newly created UiStateHolder.
+## After running
+
+The generated `entry<>` block is a no-callback stub:
+
+```kotlin
+entry<YourScreenNameScreenRoute> {
+    val holder = uiStateHolder<YourScreenNameUiStateHolder>()
+    YourScreenNameScreen(uiStateHolder = holder)
+}
+```
+
+If your screen needs to navigate elsewhere, edit the block in `AppNavigation.kt` and add the callbacks (`onSomething = { navigator.navigate(SomeRoute) }`).

@@ -1,11 +1,11 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 ---
 
 
 # Util Package
 
-The **Util** package provides a set of utility classes, constants, and interfaces used across the application to manage common tasks such as coroutines, logging, and screen routing.
+The **Util** package provides a set of utility classes, constants, and helpers used across the application — coroutine scopes, logging, UI messaging, and shared extensions.
 
 ![Util Package](/img/architecture_util.png)  
 
@@ -13,11 +13,6 @@ The **Util** package provides a set of utility classes, constants, and interface
 ## ApplicationScope
 
 The **ApplicationScope** class provides a `CoroutineScope` for running tasks that need to keep going while the app is open but aren't tied to a specific screen or feature. It's useful for background work that shouldn't be canceled when the user navigates away. Ex: fetching data on the background, sending analytics, refreshing user tokens.
-
-
-## ScreenRoute
-
-**ScreenRoute** is a simple interface that defines a `@Composable Content()` function. Route classes implement this interface and are annotated with `@Serializable` for type-safe navigation using [Compose Navigation](https://developer.android.com/develop/ui/compose/navigation). Each route class encapsulates its screen's navigation logic and UI composition.
 
 
 ## UiStateHolder
