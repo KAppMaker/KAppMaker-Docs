@@ -4,51 +4,45 @@ sidebar_position: 19
 
 # Store Screenshots
 
-Render every storefront screenshot — App Store + Play Store, all locales, framed in pure Compose — with a single command. No Fastlane, no ImageMagick, no Ruby toolchain.
+Render every storefront screenshot — App Store + Play Store, all locales — with a single command. Pure screen captures at the storefront pixel dimensions, ready to upload. No Fastlane, no ImageMagick, no Ruby toolchain.
 
 ```bash
 ./scripts/generate_store_screenshots.sh
 ```
 
-Output lands at `distribution/store_screenshots/<locale>/<device>/<tag>_<methodName>.png`, ready to upload.
+Output lands at `distribution/store_screenshots/<locale>/<device>/<tag>_<methodName>.png`.
 
 ## Adding a screenshot
 
-Drop a `@Preview @StoreScreenshot @Composable` function anywhere under `com.measify.kappmaker.*`:
+Drop a `@Preview @StoreScreenshot @Composable` function next to the screen it previews (e.g. inside `HomeScreen.kt`, `GalleryScreen.kt`):
 
 ```kotlin
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.measify.kappmaker.screenshot.DeviceFrame
-import com.measify.kappmaker.screenshot.StoreDevice
-import com.measify.kappmaker.screenshot.StoreScreenshot
+import com.measify.kappmaker.designsystem.theme.AppTheme
+import com.measify.kappmaker.util.StoreDevice
+import com.measify.kappmaker.util.StoreScreenshot
 
 @Preview
 @StoreScreenshot(device = StoreDevice.IPHONE_6_9, locale = "en", tag = "01-home")
 @Composable
 private fun HomeStoreScreenshot_iPhone_en() {
-    DeviceFrame(
-        device = StoreDevice.IPHONE_6_9,
-        headline = "Track habits effortlessly",
-    ) {
-        HomeScreen(uiState = HomeUiState.Stub)
+    AppTheme {
+        HomeScreen(uiState = HomeUiState(creditBalance = 12), onUiEvent = {})
     }
 }
 ```
 
 Re-run the script — the new PNG appears in `distribution/store_screenshots/en/iphone_6_9/01-home_HomeStoreScreenshot_iPhone_en.png`. No config edits, no script changes.
 
+The body of the preview should look exactly like what you want uploaded to the store. The captured PNG is the screen as rendered — no marketing chrome, no headlines, no device frames. If you want a slogan or background, build it directly in your composable (it's just Compose; do whatever you want).
+
 ## How it works
 
-Three pieces in `shared/src/commonMain/kotlin/com/measify/kappmaker/screenshot/`:
+`@StoreScreenshot` and the `StoreDevice` enum live at
+[`shared/src/commonMain/kotlin/com/measify/kappmaker/util/StoreScreenshot.kt`](https://github.com/KAppMaker/KAppMaker-All/blob/main/MobileApp/shared/src/commonMain/kotlin/com/measify/kappmaker/util/StoreScreenshot.kt).
 
-| File | Purpose |
-|------|---------|
-| `StoreScreenshot.kt` | The annotation + `StoreDevice` enum (storefront pixel sizes). |
-| `DeviceFrame.kt` | Compose wrapper: marketing background, headline / subtitle, and the device shell containing your screen content. |
-| `DeviceShell.kt` | Per-device bezel / notch / corner-radius rendering. |
-
-The annotation `@StoreScreenshot(device, locale, tag)` is picked up by [`StoreScreenshotGeneratorTest`](https://github.com/KAppMaker/KAppMaker-All/blob/main/MobileApp/shared/src/androidHostTest/kotlin/com/measify/kappmaker/screenshot/StoreScreenshotGeneratorTest.kt), which uses [Roborazzi](https://github.com/takahirom/roborazzi) + [ComposablePreviewScanner](https://github.com/sergio-sastre/ComposablePreviewScanner) to render at the exact dimensions and write the PNG.
+The annotation is picked up by [`StoreScreenshotGeneratorTest`](https://github.com/KAppMaker/KAppMaker-All/blob/main/MobileApp/shared/src/androidHostTest/kotlin/com/measify/kappmaker/screenshot/StoreScreenshotGeneratorTest.kt), which uses [Roborazzi](https://github.com/takahirom/roborazzi) + [ComposablePreviewScanner](https://github.com/sergio-sastre/ComposablePreviewScanner) to render at the exact dimensions and write the PNG. Roborazzi's `composeTestRule` + `previewDevice` options resize the test activity surface so the captured bitmap matches the storefront resolution.
 
 ## `StoreDevice` enum — built-in storefront sizes
 
@@ -66,13 +60,7 @@ Add new entries as Apple / Google update specs.
 
 ## Localization
 
-The `locale` parameter on `@StoreScreenshot` controls Robolectric's qualifiers and `Locale.setDefault()` so any `stringResource(...)` your composable uses renders in the right language. Author one preview per `(device × locale)` you want to ship.
-
-## Why not Fastlane frameit?
-
-- ComposablePreviewScanner already renders at any pixel size — producing a 1320 × 2868 PNG is trivial.
-- Drawing the frame in Compose means the marketing background, bezel, and headline are version-controlled, IDE-previewable, and customizable per-app. Fastlane's `frameit` ships fixed templates and needs an external Ruby toolchain.
-- One pipeline (Roborazzi + ComposablePreviewScanner) covers both regression snapshots and storefront screenshots — same mental model, same tooling.
+The `locale` parameter on `@StoreScreenshot` is set via `Locale.setDefault()` before render, so any `stringResource(...)` your composable uses renders in the right language. Author one preview per `(device × locale)` you want to ship.
 
 ## Excluded from regression tests
 
