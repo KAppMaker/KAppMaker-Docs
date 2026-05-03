@@ -4,27 +4,35 @@ sidebar_position: 10
 
 # GitHub CI/CD Actions
 
-KAppMaker uses GitHub Actions to automatically build and release the Android and iOS apps. Here are the main workflows (make sure to add necessary [Github Repository Secrets](#github-secrets)):
+KAppMaker uses GitHub Actions to automatically gate PRs and release the Android and iOS apps. **Workflows live at the repo root in `.github/workflows/`** (not under `MobileApp/`) so GitHub Actions discovers them. Each workflow uses `defaults.run.working-directory: MobileApp` to keep gradle commands clean.
 
-### 1. Build Workflow
+Make sure to add the necessary [Github Repository Secrets](#github-secrets).
 
-**Name:** Building Debug Application  (`build.yml`)   
-**When It Runs:** When you push changes to the `main` branch or create a pull request.  
-**What It Does:** Builds the debug version of both android and ios app to check if the latest changes work correctly.
+### 1. PR Checks Workflow
+
+**Name:** PR Checks (`pr_checks.yml`)
+**When It Runs:** On every pull request, and on push to `main`.
+**What It Does:** Runs the full quality gate sequence on Ubuntu — `spotlessCheck` (ktlint), unit + Compose UI tests (`:shared:jvmTest :shared:testAndroidHostTest`), screenshot regression verify (`:shared:verifyRoborazziAndroidHostTest`), then an Android debug APK build. On failure, uploads test reports + screenshot diff PNGs as artifacts so you can inspect what changed without rerunning locally. See [Testing & Quality Gates](./testing.md) for the local equivalents.
 
 ### 2. Publish Android App Workflow
 
-**Name:** Publish Android App  (`publish_android_playstore.yml`)  
-**When It Runs:** When you push a new tag that ends with `-android`.  
+**Name:** Publish Android App  (`publish_android_playstore.yml`)
+**When It Runs:** When you push a new tag that ends with `-android`.
 **What It Does:** Releases the Android app to the Google Play Store Internal Track so testers can download the latest version. You can change internal track to alpha, beta or production as well.
 
 ### 3. Publish iOS App Workflow
 
-**Name:** Publish iOS App (`publish_ios_appstore.yml`)   
-**When It Runs:** When you push a new tag that ends with `-ios`.  
+**Name:** Publish iOS App (`publish_ios_appstore.yml`)
+**When It Runs:** When you push a new tag that ends with `-ios`.
 **What It Does:** Releases the iOS app to the Apple App Store for iOS users to download.
 
-These workflows make it easier to build and release the apps, ensuring that every change is tested and made available automatically.
+### 4. WASM Build Workflow
+
+**Name:** WASM Build (`web_build.yml`)
+**When It Runs:** Manual `workflow_dispatch` only.
+**What It Does:** Produces a Wasm/JS browser bundle (`webApp/build/dist/js/productionExecutable/`) for a given branch + project ID, useful for previewing web builds without a full deploy.
+
+These workflows make it easier to gate, build, and release the apps — ensuring every change is verified and shipped automatically.
 
 ## GitHub Secrets
 KAppMaker uses several secrets to securely manage builds, authentication, caching, and publishing. Below are the important secrets you need to add to your GitHub repository:

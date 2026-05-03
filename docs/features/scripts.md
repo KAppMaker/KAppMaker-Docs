@@ -128,3 +128,20 @@ Uses OpenAI to generate optimized App Store and Play Store metadata (titles, des
 - `--store ios|android|both` — Target store (default: `both`)
 
 **Requires:** `OPENAI_API_KEY` set in `local.properties`, `~/credentials/credentials.txt`, or in the script itself.
+
+---
+
+## Generate Store Screenshots
+
+Renders every `@Preview @StoreScreenshot` composable into upload-ready PNGs at App Store / Play Store pixel sizes — framed in pure Compose, no Fastlane / ImageMagick / Ruby toolchain.
+
+```bash
+./scripts/generate_store_screenshots.sh
+```
+
+**What it does:**
+- Runs `:shared:generateStoreScreenshots` with `-PgenerateStoreScreenshots=true` so the gated `StoreScreenshotGeneratorTest` actually executes.
+- Roborazzi captures each `@Preview @StoreScreenshot` at the dimensions declared in its `StoreDevice` enum value.
+- Output: `distribution/store_screenshots/<locale>/<device>/<tag>_<methodName>.png`.
+
+**Add a new screenshot** by writing a `@Preview @StoreScreenshot @Composable` function anywhere under `com.measify.kappmaker.*`. See [Store Screenshots](./store-screenshots.md) for the authoring pattern.
