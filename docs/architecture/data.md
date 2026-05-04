@@ -48,7 +48,7 @@ The *Remote* package is responsible for making API requests and handling respons
 
 ### Local
 
-The *Local* package contains Room database entities and DAOs for local data persistence. This is available on non-web platforms (Android, iOS, JVM). See the [Local Storage](../features/local-storage.md) feature guide for setup details.
+The *Local* package contains Room 3 database entities and DAOs for local persistence. With Room 3 the `@Database`, `@Entity` and `@Dao` declarations live in `commonMain` and run on **all platforms — Android, iOS, JVM Desktop, and Web (wasmJs and js)** — via per-platform `SQLiteDriver`s (`BundledSQLiteDriver` for native, `WebWorkerSQLiteDriver` + OPFS for both web targets). See the [Local Storage](../features/local-storage.md) feature guide for setup details.
 
 ### FeatureFlag
 

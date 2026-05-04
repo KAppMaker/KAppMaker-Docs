@@ -53,23 +53,24 @@ Generates a signed keystore file and its properties file for Play Store publishi
 
 ## Create Local Data Layer
 
-Generates a complete local data layer for a given model, including Entity, DAO, Mapper, LocalDataSource, Room implementation, In-Memory implementation, and DI bindings.
+Scaffolds a Room 3 entity + DAO end-to-end in `commonMain`.
 
 ```bash
-./scripts/make_local.sh ExampleModel
+./scripts/make_local.sh Note
 ```
 
 **What it does:**
-- Creates/updates the domain model file
-- Generates local data layer files under `data/source/local`
-- Updates Room database configuration
-- Adds DI bindings
-- Creates In-Memory implementation for web platform
+- Creates the domain model in `commonMain/.../domain/model/` (skipped if it already exists).
+- Creates the `@Entity` with `toEntity()`/`toModel()` extension-function mappers.
+- Creates the `@Dao` with the standard CRUD surface (`getById`, `getByIdFlow`, `getAllFlow`, `upsert`, `delete`, `deleteAll`).
+- Registers the entity in `@Database(entities = [...])` on `AppDatabase`.
+- Adds the abstract DAO accessor on `AppDatabase`.
+- Registers `single { get<AppDatabase>().<name>Dao() }` in `DatabaseModule.kt`.
 
 **Notes:**
-- Re-running the script for the same model skips existing domain files to prevent overwriting
-- Automatically creates required folders and imports
-- Ensure the base package path matches your project structure
+- Idempotent — re-running for the same model skips files / wiring already in place.
+- Insertion points in `AppDatabase.kt` and `DatabaseModule.kt` are marked with `// Add new ... — make_local.sh inserts here.` comments. Leave those alone.
+- After scaffolding: edit the generated entity to add real columns (and update the mappers), then bump `@Database(version = ...)` and add a `Migration` if you've already shipped.
 
 ---
 
