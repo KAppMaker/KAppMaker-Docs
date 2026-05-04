@@ -107,6 +107,15 @@ For Apple Sign-In to work in android, follow these steps:
    - Enter your **Key ID**, **Team ID**, and **Service ID**.
 
 
+## Sign In Screen
+
+`SignInScreen` is a single screen that handles both **sign in** and **sign up** flows, plus a guest path:
+
+- **In-place mode toggle** — a "New here? Create account" / "Already have an account? Sign in" row at the bottom flips the screen between modes without navigating. The toolbar title and main heading update accordingly.
+- **Initial mode** — `SignInScreenRoute(isSignIn: Boolean = false)` chooses which mode the screen opens in. Pass `true` to land directly on sign-in.
+- **Existing-account fallback** — if the user attempts to create an account that already exists (`UserAlreadyExistsException` from the OAuth provider), the screen automatically switches to sign-in mode and surfaces a message.
+- **Continue as guest** — a text button that calls `UserRepository.continueAsGuest()`, which signs the user in anonymously if they aren't already (KAppMaker also auto-signs anonymously on first launch via `signInAnonymouslyIfNecessary()`), then dismisses the screen.
+
 ## User Management
 
 The `ProfileScreen` and `SignInScreen` already handles the current user, logging out, and deleting the user for you. If you need, the core functionality is managed by `UserRepository`. You can manage the current user, log out, and delete the user using `UserRepository`:
@@ -118,6 +127,10 @@ To sign out a user, call the `logOut()` method. This logs the user out of the ap
 #### Current User
 
 You can get information about the current user, such as their ID, email, and subscription status, using the `currentUser` field.
+
+#### Continue as Guest
+
+To sign the current user in anonymously (or no-op if they already have a session), call the `continueAsGuest()` method. This is what the **Continue as guest** button on `SignInScreen` calls under the hood.
 
 #### Delete Account
 
