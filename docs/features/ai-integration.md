@@ -10,7 +10,7 @@ You can also watch the video for AI Integration setup: [https://www.youtube.com/
 
 ## Backend - Firebase Functions Setup
 
-Before starting, you need to initialize Firebase in your project. First download KAppMaker-Web repo, and navigate into root folder. **`functions/`**: 
+Before starting, you need to initialize Firebase in your project. From the [KAppMaker-All](https://github.com/KAppMaker/KAppMaker-All) monorepo, navigate to **`Web/functions/`**:
 
 
   ### 1. Install Firebase CLI

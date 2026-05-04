@@ -10,7 +10,7 @@ You can also watch the video for App Landing Page setup: [https://www.youtube.co
 
 ## Requirements
 
-Before starting, you need to initialize Firebase in your project. First download KAppMaker-Web repo, and navigate into root folder. **`public/`**: Contains the app landing page template.
+Before starting, you need to initialize Firebase in your project. From the [KAppMaker-All](https://github.com/KAppMaker/KAppMaker-All) monorepo, navigate to **`Web/public/`** — it contains the app landing page template.
 
   ### 1. Install Firebase CLI
 
