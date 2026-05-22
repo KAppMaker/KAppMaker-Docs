@@ -50,7 +50,7 @@ val appCreditSystemConfig = creditSystemConfig {
         amount = 10,
         condition = { 
             val sub = subscriptionRepository.getCurrentPremiumSubscription()
-            sub != null && sub.durationType == DurationType.WEEKLY
+            sub != null && sub.durationType == Subscription.DurationType.WEEKLY
         }
     )
 
