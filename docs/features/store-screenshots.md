@@ -24,7 +24,7 @@ import com.measify.kappmaker.util.StoreDevice
 import com.measify.kappmaker.util.StoreScreenshot
 
 @Preview
-@StoreScreenshot(device = StoreDevice.IPHONE_6_9, locale = "en", tag = "01-home")
+@StoreScreenshot(device = StoreDevice.IPHONE_6_5, locale = "en", tag = "01-home")
 @Composable
 private fun HomeStoreScreenshot_iPhone_en() {
     AppTheme {

@@ -62,11 +62,121 @@ suspend fun hasPremiumAccess() = hasEntitlementAccess("gold") || hasEntitlementA
 
 ### Showing Remote or Custom Paywall UI
 
-By default, KAppMaker shows the **remote paywall UI**. This allows you to manage and update your paywall directly through the RevenueCat dashboard without needing to publish a new version of the app. 
+By default, KAppMaker shows the **pre-configured custom paywall screen** (`SHOW_REMOTE_PAYWALL = false` in `FeatureFlagManager`). It fully handles displaying products/subscriptions, purchasing, and restoring purchases according to App Store and Play Store guidelines, and gives you full design control because the entire UI lives in your codebase.
 
-However, KAppMaker also comes with a **pre-configured custom paywall screen** that fully handles displaying products/subscriptions, purchasing, and restoring purchases according to App Store and Play Store guidelines. This custom paywall is implemented in the `PaywallScreen`.  
+If you'd rather manage the paywall remotely — adjust pricing, swap copy, run experiments without shipping a new build — flip `SHOW_REMOTE_PAYWALL` to `true` in `FeatureFlagManager` (located at `data/source/featureflag/`). KAppMaker then renders the provider's built-in remote paywall UI from RevenueCat or Adapty. Since this is a feature flag, you can also toggle it remotely via Firebase Remote Config without an app update.
 
-You can easily switch to the custom paywall screen by updating the `SHOW_REMOTE_PAYWALL` default value in the `FeatureFlagManager` (located at `data/source/featureflag/`). Set `SHOW_REMOTE_PAYWALL` to `false` to display your custom paywall UI instead of the remote one. Since this is a feature flag, you can also toggle it remotely via Firebase Remote Config without an app update.
+### Custom Paywall Architecture
+
+The custom paywall lives at `shared/src/commonMain/kotlin/com/measify/kappmaker/presentation/screens/paywall/` and is split into three layers so that screens stay display-only and the formatting logic is unit-testable in isolation.
+
+```
+PaywallScreen.kt              # router — overlays + dispatches to a child screen
+PaywallUiState.kt             # state, events, package UI state, mode enum
+PaywallUiStateHolder.kt       # lifecycle: fetch / select / buy / restore
+PaywallUiStateMapper.kt       # pure: PurchasePackage[] → PaywallUiState slice
+PaywallPreviewData.kt         # @Preview fixtures
+subscription/SubscriptionPaywallScreen.kt
+creditpack/CreditPackPaywallScreen.kt
+```
+
+**`PaywallUiStateMapper`** is the brain. Given the raw `List<PurchasePackage>` + the selected id + the placement mode, it produces a `MappedPaywall` carrying:
+
+- `packages: List<PaywallPackageUiState>` — one card per package with pre-built `title` / `subtitle` / `priceText` / `savingsBadge` as `UiText`.
+- `ctaText` — button copy ("Continue" / "Try for $0.00" / "Buy credits").
+- `aboveCtaText` — bold reassurance line shown immediately above the CTA ("Cancel anytime", "Save 90% on your first 3 months", "No payment required now").
+- `belowCtaText` — fine-print compliance disclosure shown below the CTA when an intro phase exists ("3 days free, then $X/month. Cancel anytime."). Null otherwise.
+
+It also exposes `pickDefaultSelection(...)` so the user lands on the BEST VALUE / SAVE N% plan — the same package that wears the chip — instead of the cheapest.
+
+**`PaywallUiStateHolder`** stays thin: it owns the `StateFlow<PaywallUiState>`, calls the repository, dispatches purchase events, and calls `mapper.map(...)` whenever packages or selection change.
+
+**`PaywallScreen`** is a one-shot router. It owns the `SuccessfulPurchaseView` overlay and the error dialog, then dispatches based on `uiState.mode`:
+
+- `PaywallMode.SUBSCRIPTION` → `SubscriptionPaywallScreen`
+- `PaywallMode.CREDIT_PACK` → `CreditPackPaywallScreen`
+
+Each child screen owns its own `ScreenWithToolbar` (close icon + Restore action), so horizontal padding isn't applied twice.
+
+### Adding a New Paywall Placement
+
+To open the paywall as a credit pack (or any future placement), navigate with a placement id:
+
+```kotlin
+navigator.navigate(
+    PaywallScreenRoute(placementId = Constants.PAYWALL_PLACEMENT_CREDITS_PACK),
+)
+```
+
+`PaywallUiStateHolder` reads the placement id, derives a `PaywallMode`, and the mapper picks the right code path (subscription cards vs. credit-pack rows, different default-selection rules, different CTA / reassurance copy).
+
+To introduce a brand-new placement type:
+
+1. Add a constant in `Constants.PAYWALL_PLACEMENT_*`.
+2. Add an entry to `PaywallMode`.
+3. Branch the mapper's `map(...)` and `pickDefaultSelection(...)` for the new mode.
+4. Route to the right child screen from `PaywallScreen`.
+5. Add a new `paywall_<prefix>_*` group in `strings.xml`. Shared chrome (`paywall_*`, `paywall_unit_*`) is reusable.
+
+### Paywall String Resources
+
+All paywall copy lives in `composeResources/values/strings.xml` under three prefixes — drop a translated `strings.xml` next to the default one to add a locale.
+
+| Prefix | Purpose |
+|---|---|
+| `paywall_*` | Shared chrome — toolbar action (`paywall_btn_restore`), footer links, BEST VALUE / SAVE N% badges. |
+| `paywall_sub_*` | Subscription flow — plan titles, per-week subtitle, reassurance + disclosure templates, CTA copy. |
+| `paywall_cp_*` | Credit-pack flow — title, subtitle, credits count, per-credit unit price, CTA copy. |
+| `paywall_unit_*` | Period units as **plurals** (`paywall_unit_day` / `paywall_unit_day_count`). Bare form for noun suffixes (`/week`, `your first month`); count form for durations (`3 months`, `7 days`). |
+
+Templates that need to embed another translated word (e.g. a localized unit) use `UiText.ofComposed(...)`. Plain primitive args use `UiText.of(stringRes, args)`. Plural-aware copy uses `UiText.of(pluralRes, count, args)`. See `designsystem/util/UiText.kt`.
+
+### Previewing the Custom Paywall
+
+`PaywallPreviewData` provides ready-made fixtures used by every `@Preview` and `@StoreScreenshot` composable in the paywall package:
+
+```kotlin
+@Preview(widthDp = 393, heightDp = 851)
+@Composable
+private fun SubscriptionPaywallScreen_Default_Preview() {
+    AppTheme {
+        SubscriptionPaywallScreen(
+            uiState = PaywallPreviewData.subscriptionState(trialAvailable = false),
+            onUiEvent = {},
+        )
+    }
+}
+```
+
+Available fixtures: `subscriptionState(trialAvailable)`, `paidIntroSubscriptionState()`, `creditPackState()`, plus `subscriptionPackage(...)` / `creditPack(...)` builders for one-off rows. These bypass the real mapper, so previews don't need string resources or billing data wired up.
+
+### Generating Paywall Store Screenshots
+
+When you need real PNGs of the paywall to upload to the App Store / Play Store (or to attach to a review submission), don't take device screenshots by hand — generate them from the previews. Annotate a `@Preview @Composable` with `@StoreScreenshot` and run:
+
+```bash
+./scripts/generate_store_screenshots.sh
+```
+
+Output lands in `distribution/store_screenshots/<locale>/<device>/<tag>_<methodName>.png` — pure pixel captures at the storefront dimensions, ready to upload. KAppMaker ships with paywall captures already wired up: `paywall_review_screenshot_subscription` (no-trial / trial / paid-intro variants) and `paywall_review_screenshot_credits`.
+
+To add your own, drop a `@StoreScreenshot`-tagged preview next to the screen and call `PaywallPreviewData.…`:
+
+```kotlin
+@Preview
+@StoreScreenshot(device = StoreDevice.IPHONE_6_5, locale = "en", tag = "paywall_review_screenshot_subscription")
+@Composable
+private fun SubscriptionPaywallStoreScreenshot_Trial_iPhone_en() {
+    AppTheme {
+        SubscriptionPaywallScreen(
+            uiState = PaywallPreviewData.subscriptionState(trialAvailable = true),
+            onUiEvent = {},
+        )
+    }
+}
+```
+
+For the full author + render pipeline (devices, locales, naming, CI integration), see the [Store Screenshots](./store-screenshots.md) guide.
 
 ### Setting Up Adapty
 
