@@ -96,3 +96,25 @@ To automate the publishing process using GitHub Actions, follow these steps:
 
 
 
+## SwiftPM Dependencies & the Linkage Package
+
+Some libraries link their native iOS SDK through **Swift Package Manager (SwiftPM)** instead of CocoaPods. This isn't specific to one feature — any library you add now or in the future can do it. For example, KMPNotifier's push module (`kmpnotifier-push-firebase`) pulls `firebase-ios-sdk` (FirebaseMessaging) via SwiftPM.
+
+When the shared framework consumes a SwiftPM dependency and the iOS app uses Kotlin's **embed-and-sign** integration (KAppMaker does), Kotlin 2.4+ needs a small generated **linkage package** so those SwiftPM products actually link into the final app binary. KAppMaker ships this already wired up:
+
+- `MobileApp/iosApp/KotlinMultiplatformLinkedPackage/` — a generated local Swift package that mirrors the shared framework's SwiftPM products and forces them to link. It's committed, so a fresh checkout (and every app generated from KAppMaker) builds without extra steps.
+- `iosApp.xcodeproj` already has the `embedAndSignAppleFrameworkForXcode` run-script build phase (runs on every build) and `ENABLE_USER_SCRIPT_SANDBOXING = NO` (Xcode 16+ would otherwise block that phase).
+
+**You only regenerate the linkage package when the set of SwiftPM dependencies changes** — e.g. you add a new library whose iOS SDK is consumed via SwiftPM, or you bump one to a version that changes its products. Routine code or non-SwiftPM dependency changes need nothing.
+
+If Xcode ever prints *"You have SwiftPM dependencies with embedAndSign integration … integrate with synthetic import linkage project"*, do this:
+
+```bash
+cd MobileApp
+XCODEPROJ_PATH="$PWD/iosApp/iosApp.xcodeproj" \
+  ./gradlew :shared:integrateEmbedAndSign :shared:integrateLinkagePackage
+```
+
+Then add/verify the matching Swift package version in Xcode (File → Add Package Dependencies — e.g. `firebase-ios-sdk` **exact `12.14.0`** for KMPNotifier 2.0), commit the regenerated `KotlinMultiplatformLinkedPackage/` + `iosApp.xcodeproj` changes, and rebuild.
+
+> `integrateEmbedAndSign` and `integrateLinkagePackage` are **one-time setup tasks** that edit the Xcode project — they are *not* part of the normal build, so you don't run them on every build. The per-build work is the committed `embedAndSign` run-script phase.
