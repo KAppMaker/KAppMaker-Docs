@@ -41,16 +41,11 @@ After adding the above keys, sync the project again. Once the sync is complete, 
 
 ### 4. Set Up the iOS App
 
-If you successfully launch the Android app, proceed to set up the iOS app. Navigate to the `iosApp` folder and install the Pod dependencies:
-
-```
-cd iosApp
-pod install --repo-update
-```
+If you successfully launch the Android app, proceed to set up the iOS app. The iOS app uses **Swift Package Manager** for its native dependencies (Firebase, Google Mobile Ads, etc.) — there is no CocoaPods step. Xcode resolves the packages automatically the first time you open the project.
 
 ### 5. Open the iOS Project in Xcode
 
-Open the project in Xcode by using the `.xcworkspace` file (not the `.xcodeproj` file) from iosApp folder. Once opened, run the app in Xcode. At this point, you should be able to run both the Android and iOS apps.
+Open `iosApp/iosApp.xcodeproj` in Xcode (there is no `.xcworkspace` — the project is SwiftPM-only). Wait for package resolution to finish, then run the app. At this point, you should be able to run both the Android and iOS apps.
 
 ### 6. Congratulations!
 
