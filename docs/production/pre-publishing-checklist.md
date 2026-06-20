@@ -152,12 +152,11 @@ ADMOB_REWARDED_AD_ID_IOS=ca-app-pub-xxxxx/xxxxx
 
 ## 9. Subscription Provider
 
-- [ ] **Choose your provider** in `gradle.properties`:
+- [ ] **Choose your provider** in `gradle.properties` (this is the only switch — `Constants` resolves the factory automatically, no code change needed):
   ```properties
-  # Options: REVENUECAT or ADAPTY
-  SUBSCRIPTION_PROVIDER=REVENUECAT
+  # Options: ADAPTY (default) or REVENUECAT
+  SUBSCRIPTION_PROVIDER=ADAPTY
   ```
-- [ ] **Update the factory** in `Constants.kt` — set `subscriptionProviderFactory` to match your chosen provider (`SubscriptionProviderFactory.RevenueCat` or `SubscriptionProviderFactory.Adapty`)
 - [ ] **Configure products** in your provider's dashboard and link them to App Store / Play Store products
 - [ ] **Verify entitlement ID** — `PAYWALL_PREMIUM_ACCESS` in Constants should match the entitlement/access level ID in your provider
 
