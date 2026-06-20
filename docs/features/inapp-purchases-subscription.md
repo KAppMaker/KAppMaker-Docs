@@ -4,23 +4,23 @@ sidebar_position: 3
 
 # In-App Purchases & Subscriptions
 
-KAppMaker simplifies handling in-app purchases and subscriptions with support for two subscription providers: [RevenueCat](https://www.revenuecat.com/) and [Adapty](https://adapty.io/). You can switch between them at build time. KAppMaker supports both a remote paywall UI and a pre-configured subscription/in-app purchase screen. The remote paywall allows you to update pricing and product details directly from the provider's dashboard, without requiring an app update.
+KAppMaker simplifies handling in-app purchases and subscriptions with support for two subscription providers: [Adapty](https://adapty.io/) (the default) and [RevenueCat](https://www.revenuecat.com/). You can switch between them at build time. KAppMaker supports both a remote paywall UI and a pre-configured subscription/in-app purchase screen. The remote paywall allows you to update pricing and product details directly from the provider's dashboard, without requiring an app update.
 
 ### Choosing a Subscription Provider
 
-KAppMaker supports two subscription providers out of the box. You can switch between them by setting the `SUBSCRIPTION_PROVIDER` property in `gradle.properties`:
+KAppMaker supports two subscription providers out of the box. The default is **Adapty**. You can switch between them by setting the `SUBSCRIPTION_PROVIDER` property in `gradle.properties`:
 
 ```properties
-# Possible options: REVENUECAT, ADAPTY
-SUBSCRIPTION_PROVIDER=REVENUECAT
+# Possible options: ADAPTY (default), REVENUECAT
+SUBSCRIPTION_PROVIDER=ADAPTY
 ```
 
 The subscription system uses a modular architecture with separate modules:
 - **subscription-api** — Common interface contracts shared by both providers
-- **subscription-revenuecat** — RevenueCat implementation
 - **subscription-adapty** — Adapty implementation
+- **subscription-revenuecat** — RevenueCat implementation
 
-The active provider is selected at compile time based on the `SUBSCRIPTION_PROVIDER` property.
+The active provider is selected at compile time based on the `SUBSCRIPTION_PROVIDER` property. You only change this one property — `Constants` resolves the chosen provider automatically (it never names a concrete provider), so the build and app code can't drift.
 
 ### Setting Up RevenueCat
 
