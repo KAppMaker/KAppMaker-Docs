@@ -23,7 +23,7 @@ Renames the app's package / `applicationId` / iOS bundle ID and display name acr
 - `--app-id <id>` (required) — new Android `applicationId` / iOS bundle ID (e.g. `com.example.newapp`).
 - `--app-name <name>` (required) — new app display name.
 - `--skip-package-rename` — keep Kotlin packages/directories; only update IDs, Firebase refs, and app name. **Default: off** (packages are renamed).
-- `--old-app-id <id>` / `--old-app-name <name>` — override the values being replaced. By default these are **auto-detected** from the project (old id from the androidApp `namespace`, old name from `rootProject.name` in `settings.gradle.kts`), so re-refactoring an already-renamed project just works without passing them. Falls back to `com.measify.kappmaker` / `KAppMakerAllModules` if detection finds nothing.
+- `--old-app-id <id>` / `--old-app-name <name>` — override the values being replaced. By default these are **auto-detected** from the project (old id from the androidApp `namespace`, old name from `rootProject.name` in `settings.gradle.kts`), so re-refactoring an already-renamed project just works without passing them. If detection can't find them, the script **aborts** (rather than guessing a default) and asks you to pass these flags.
 - `-y`, `--yes` — skip the confirmation prompt (required for non-interactive/CI use).
 
 > Positional `<newAppId> <newAppName>` are still accepted as a fallback, but the named flags above are preferred.
