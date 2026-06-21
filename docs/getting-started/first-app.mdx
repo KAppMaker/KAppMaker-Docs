@@ -58,13 +58,17 @@ Run the `refactor_package.sh` script (from `MobileApp/`) to update your app ID a
 
 
 ```bash
-./scripts/refactor_package.sh com.example.newapp NewApp
+# Full refactor (renames Kotlin packages too):
+./scripts/refactor_package.sh --app-id com.example.newapp --app-name NewApp
+
+# Or keep Kotlin packages, change IDs + display name only:
+./scripts/refactor_package.sh --app-id com.example.newapp --app-name NewApp --skip-package-rename
 ```
 
 **Arguments:**
-- `<newAppId>` (required, 1st positional) → Android `applicationId` / iOS bundle ID  
-- `<newAppName>` (required, 2nd positional) → App display name  
-- `--skip-package-rename` (optional) → Keep Kotlin packages and directories unchanged; only update the `applicationId`, bundle ID, Firebase refs, and app name. Makes it easier to sync changes across multiple apps from the same codebase and avoid merge conflicts in future.
+- `--app-id <id>` (required) → Android `applicationId` / iOS bundle ID  
+- `--app-name <name>` (required) → App display name  
+- `--skip-package-rename` (optional, **default: off** — packages are renamed) → Keep Kotlin packages and directories unchanged; only update the `applicationId`, bundle ID, Firebase refs, and app name. Makes it easier to sync changes across multiple apps from the same codebase and avoid merge conflicts in future.
 
 :::tip Important
 

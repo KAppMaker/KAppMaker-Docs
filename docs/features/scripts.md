@@ -12,19 +12,21 @@ Renames the app's package / `applicationId` / iOS bundle ID and display name acr
 
 ```bash
 # Full refactor — Kotlin packages + applicationId + bundle ID + app name:
-./scripts/refactor_package.sh com.example.newapp NewApp
+./scripts/refactor_package.sh --app-id com.example.newapp --app-name NewApp
 
 # IDs + app name only, keep Kotlin packages/dirs (fewer merge conflicts when
 # spinning multiple apps off one base):
-./scripts/refactor_package.sh com.example.newapp NewApp --skip-package-rename
+./scripts/refactor_package.sh --app-id com.example.newapp --app-name NewApp --skip-package-rename
 ```
 
 **Arguments & options:**
-- `<newAppId>` (required) — new Android `applicationId` / iOS bundle ID (e.g. `com.example.newapp`).
-- `<newAppName>` (required) — new app display name.
-- `--skip-package-rename` — keep Kotlin packages/directories; only update IDs, Firebase refs, and app name.
-- `--old-app-id <id>` / `--old-app-name <name>` — override the values being replaced (defaults: `com.measify.kappmaker` / `KAppMakerAllModules`). Use these to re-refactor an already-renamed project.
+- `--app-id <id>` (required) — new Android `applicationId` / iOS bundle ID (e.g. `com.example.newapp`).
+- `--app-name <name>` (required) — new app display name.
+- `--skip-package-rename` — keep Kotlin packages/directories; only update IDs, Firebase refs, and app name. **Default: off** (packages are renamed).
+- `--old-app-id <id>` / `--old-app-name <name>` — override the values being replaced. **Defaults: `com.measify.kappmaker` / `KAppMakerAllModules`.** Use these to re-refactor an already-renamed project.
 - `-y`, `--yes` — skip the confirmation prompt (required for non-interactive/CI use).
+
+> Positional `<newAppId> <newAppName>` are still accepted as a fallback, but the named flags above are preferred.
 
 **Notes:**
 - Edits files in place and is irreversible — **commit or back up first**. The script prints a plan and asks for confirmation unless `-y` is passed.

@@ -12,9 +12,13 @@ Before publishing your app, make sure you have completed all the steps below. Th
 
 - [ ] **Refactor package name** using the script (run from `MobileApp/`):
   ```bash
-  ./scripts/refactor_package.sh com.yourcompany.yourapp YourApp
+  # Full refactor (renames Kotlin packages too):
+  ./scripts/refactor_package.sh --app-id com.yourcompany.yourapp --app-name YourApp
+
+  # Or keep Kotlin packages, change IDs + display name only:
+  ./scripts/refactor_package.sh --app-id com.yourcompany.yourapp --app-name YourApp --skip-package-rename
   ```
-  This updates the Android `applicationId`, iOS `bundleIdentifier`, package directories, and all related references.
+  `--app-id` and `--app-name` are required; `--skip-package-rename` defaults to off (packages are renamed). This updates the Android `applicationId`, iOS `bundleIdentifier`, package directories, and all related references.
 
 - [ ] **Verify Android app name** in `androidApp/src/main/AndroidManifest.xml` — update the `android:label` attribute.
 
