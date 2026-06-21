@@ -81,8 +81,8 @@ Use [AppIcon.co](https://www.appicon.co/) to generate all required iOS icon size
 
 - [ ] Update launcher background and primary colors in `androidApp/src/main/res/values/colors.xml`:
   - `ic_launcher_background` — background color for adaptive icons
-  - `primary` — primary brand color (used in splash/status bar)
-  - `windowBackgroundColor` — app window background color
+  - `primary` — primary brand color (used in the status bar / notifications)
+  - `windowBackgroundColor` — app window background color (also the Android splash screen background)
 
 - [ ] Update dark mode colors in `androidApp/src/main/res/values-night/colors.xml`
 
