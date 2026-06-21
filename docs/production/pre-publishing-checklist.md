@@ -10,9 +10,9 @@ Before publishing your app, make sure you have completed all the steps below. Th
 
 ## 1. Package Name & App Identity
 
-- [ ] **Refactor package name** using the Gradle task:
+- [ ] **Refactor package name** using the script (run from `MobileApp/`):
   ```bash
-  ./gradlew refactorPackage -PnewAppId=com.yourcompany.yourapp -PnewAppName=YourApp
+  ./scripts/refactor_package.sh com.yourcompany.yourapp YourApp
   ```
   This updates the Android `applicationId`, iOS `bundleIdentifier`, package directories, and all related references.
 
