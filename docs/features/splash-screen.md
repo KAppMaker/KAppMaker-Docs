@@ -14,9 +14,11 @@ Uses the official **`androidx.core:core-splashscreen`** API.
 
 - Theme `Theme.App.Starting` in `androidApp/src/main/res/values/styles.xml`.
 - The background is `@color/windowBackgroundColor` — **the same as the app window** — so the splash
-  hands off to your UI with no color flash. The icon is `@drawable/ic_logo`, your **brand logo**
-  (the same one onboarding shows). Don't use the launcher foreground here — it's tuned for the dark
-  adaptive-icon background and would be invisible on the light splash.
+  hands off to your UI with no color flash. The icon is the **adaptive launcher icon**
+  `@mipmap/ic_launcher`. (The system masks the splash icon to a circle; adaptive icons are built for
+  that, so it stays crisp and uncropped — a full-bleed brand logo would lose its corners. The native
+  theme also can't reference Compose resources, only `res/` ones.) Your **brand logo** (`ic_logo`)
+  is shown uncropped by the in-app Compose splash (the onboarding loading screen).
 - Wired via `android:theme="@style/Theme.App.Starting"` on `AppActivity`, plus
   `installSplashScreen()` (before `super.onCreate()`) in `App.android.kt`. After launch,
   `postSplashScreenTheme` hands off to `AppTheme`.
@@ -56,8 +58,13 @@ The `Info.plist` keys reference those by name:
 
 | Platform | Background | Logo |
 | --- | --- | --- |
-| Android | `windowBackgroundColor` (colors.xml) — same as the app window | `@drawable/ic_logo` — your brand logo |
+| Android | `windowBackgroundColor` (colors.xml) — same as the app window | `@mipmap/ic_launcher` — the adaptive launcher icon (circle-masked) |
 | iOS | `SplashBackground.colorset` | `ic_logo.imageset/ic_logo.png` — your brand logo |
 
 > Tip: keep the iOS `SplashBackground` color in sync with your Android `windowBackgroundColor`
 > (the app window background) so both platforms look identical and transition seamlessly.
+
+The **brand logo** shown right after the native splash (the in-app Compose splash, sign-in, and
+onboarding) is `designsystem/.../composeResources/drawable/ic_logo.webp`. Replace that one file to
+rebrand the in-app logo across all platforms — it's the same asset the native iOS launch screen uses
+(copied to `ic_logo.imageset/ic_logo.png`, since the launch screen can't read Compose resources).
