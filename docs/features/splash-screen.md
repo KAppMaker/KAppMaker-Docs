@@ -13,9 +13,9 @@ Compose UI loads.
 Uses the official **`androidx.core:core-splashscreen`** API.
 
 - Theme `Theme.App.Starting` in `androidApp/src/main/res/values/styles.xml`.
-- It **reuses the launcher icon's own colors** — the background is `@color/ic_launcher_background`
-  and the icon is `@mipmap/ic_launcher_foreground`. So the splash follows your app icon
-  automatically: change the icon and the splash matches, nothing else to edit.
+- The background is `@color/windowBackgroundColor` — **the same as the app window** — so the splash
+  hands off to your UI with no color flash. The icon is `@mipmap/ic_launcher_foreground`, so it
+  follows your app icon automatically.
 - Wired via `android:theme="@style/Theme.App.Starting"` on `AppActivity`, plus
   `installSplashScreen()` (before `super.onCreate()`) in `App.android.kt`. After launch,
   `postSplashScreenTheme` hands off to `AppTheme`.
@@ -55,8 +55,8 @@ The `Info.plist` keys reference those by name:
 
 | Platform | Background | Logo |
 | --- | --- | --- |
-| Android | `ic_launcher_background` (colors.xml) — same as the app icon | `ic_launcher_foreground` — same as the app icon |
+| Android | `windowBackgroundColor` (colors.xml) — same as the app window | `ic_launcher_foreground` — same as the app icon |
 | iOS | `SplashBackground.colorset` | `ic_logo.imageset/ic_logo.png` |
 
-> Tip: keep the iOS `SplashBackground` color in sync with your Android `ic_launcher_background`
-> so both platforms look identical.
+> Tip: keep the iOS `SplashBackground` color in sync with your Android `windowBackgroundColor`
+> (the app window background) so both platforms look identical and transition seamlessly.
