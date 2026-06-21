@@ -6,6 +6,36 @@ sidebar_position: 16
 
 Helper scripts are located in the `MobileApp/scripts/` directory. Run all scripts from the `MobileApp/` directory.
 
+## Refactor Package
+
+Renames the app's package / `applicationId` / iOS bundle ID and display name across the whole project — Kotlin packages and directories, Gradle files, Firebase/Google-services configs, iOS `Info.plist` / `project.pbxproj`, GitHub publish workflows, and the helper scripts.
+
+```bash
+# Full refactor — Kotlin packages + applicationId + bundle ID + app name:
+./scripts/refactor_package.sh --app-id com.example.newapp --app-name NewApp
+
+# IDs + app name only, keep Kotlin packages/dirs (fewer merge conflicts when
+# spinning multiple apps off one base):
+./scripts/refactor_package.sh --app-id com.example.newapp --app-name NewApp --skip-package-rename
+```
+
+**Arguments & options:**
+- `--app-id <id>` (required) — new Android `applicationId` / iOS bundle ID (e.g. `com.example.newapp`).
+- `--app-name <name>` (required) — new app display name.
+- `--skip-package-rename` — keep Kotlin packages/directories; only update IDs, Firebase refs, and app name. **Default: off** (packages are renamed).
+- `--old-app-id <id>` / `--old-app-name <name>` — override the values being replaced. By default these are **auto-detected** from the project (old id from the androidApp `namespace`, old name from `rootProject.name` in `settings.gradle.kts`), so re-refactoring an already-renamed project just works without passing them. If detection can't find them, the script **aborts** (rather than guessing a default) and asks you to pass these flags.
+- `-y`, `--yes` — skip the confirmation prompt (required for non-interactive/CI use).
+
+> Positional `<newAppId> <newAppName>` are still accepted as a fallback, but the named flags above are preferred.
+
+**Notes:**
+- Edits files in place and is irreversible — **commit or back up first**. The script prints a plan and asks for confirmation unless `-y` is passed.
+- Idempotent — re-running with the same args is a no-op once applied.
+- Replace `google-services.json` / `GoogleService-Info.plist` with configs for the new app ID after running.
+- Requires `perl` (preinstalled on macOS and CI Linux).
+
+---
+
 ## Update Version
 
 Automatically increments the version code and optionally updates the version name for both Android and iOS in one go.
