@@ -109,7 +109,7 @@ Run the generator from `MobileApp/`:
 ./scripts/generate_screen.sh Settings
 ```
 
-It creates `SettingsScreen.kt`, `SettingsUiState.kt`, `SettingsUiStateHolder.kt` under `presentation/screens/settings/`, registers the route in `Routes.kt`, inserts a stub `entry<SettingsScreenRoute> { … }` in `AppNavigation.kt`, and adds `viewModelOf(::SettingsUiStateHolder)` to `AppInitializer.kt`.
+It creates `SettingsScreen.kt`, `SettingsUiState.kt`, `SettingsUiStateHolder.kt` under `presentation/screens/settings/`, registers the route in `Routes.kt`, inserts a stub `entry<SettingsScreenRoute> { … }` in `AppNavigation.kt`, and adds `viewModelOf(::SettingsUiStateHolder)` to `root/Di.kt`.
 
 After it runs, edit the generated `entry<>` block in `AppNavigation.kt` to wire any navigation callbacks the screen needs (`onSomething = { navigator.navigate(SomeRoute) }`).
 
