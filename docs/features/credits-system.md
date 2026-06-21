@@ -27,12 +27,12 @@ This feature adds a **fully configurable, extensible credit system** to the app.
 
 ### **2. Configurable Credit Behavior (DSL)**
 
-Apps can define **credit sources + rules** using the new `creditSystemConfig` DSL in `AppInitializer` `initializeCreditSystem` method.
+Apps can define **credit sources + rules** using the new `creditSystemConfig` DSL in the `root/Di.kt` `initializeCreditSystem` method.
 
 Example:
 
 ``` kotlin
-// see AppInitializer.kt `initializeCreditSystem` method
+// see Di.kt `initializeCreditSystem` method
 val appCreditSystemConfig = creditSystemConfig {
     // One-time bonus for new users
     oneTimeBonus("welcome_bonus", 1)

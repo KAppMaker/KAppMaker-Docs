@@ -42,7 +42,7 @@ It then patches three existing files (each insertion is idempotent — safe to r
 |--------------------------------------------|-------------------------------------------------------------------------------|
 | `presentation/navigation/Routes.kt`         | `data object YourScreenNameScreenRoute : ScreenRoute` (with `@Serializable`/`@SerialName`) |
 | `presentation/navigation/AppNavigation.kt`  | An `entry<YourScreenNameScreenRoute> { … }` block plus the screen/holder imports |
-| `root/AppInitializer.kt`                    | `viewModelOf(::YourScreenNameUiStateHolder)` plus the holder import           |
+| `root/Di.kt`                                | `viewModelOf(::YourScreenNameUiStateHolder)` plus the holder import           |
 
 The insertion points are marked in each file by a `// Add new … below — generate_screen.sh inserts here.` comment. Don't remove those markers — the script grep-checks them and warns if they're missing.
 

@@ -48,4 +48,4 @@ entry<OnBoardingScreenRoute> {
 
 The Navigation 3 entry decorator scopes ViewModels to their `NavEntry`, so each holder lives as long as its destination is on the back stack and is cleared automatically when popped — no separate "navigator-scoped" helper needed.
 
-Ensure that the DI setup is done in `AppInitializer` within the `presentationModule`, for example, by adding `viewModelOf(::NewUiStateHolder)` to handle dependencies for the new *UiStateHolder*.
+Ensure that the DI setup is done in `root/Di.kt` within the `presentationModule`, for example, by adding `viewModelOf(::NewUiStateHolder)` to handle dependencies for the new *UiStateHolder*.

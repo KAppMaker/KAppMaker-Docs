@@ -28,5 +28,5 @@ The KAppMaker architecture consists of three main layers/packages (domain, data,
 2. **[Data](data)**: Manages data sources, including user preferences and remote APIs and repositories.
 3. **[Presentation](presentation)**: Contains UI components, theme (color, font), and screens. Each screen has its own UiState, UiEvent (user actions), and Composable Screen.
 4. **[Navigation](navigation)**: Routes, the back-stack model, and the root `AppNavigation` composable. Lives at `presentation/navigation/`; feature folders stay free of navigation glue.
-5. **Root**: Application entry point and initialization. `AppInitializer` contains startup logic and dependency injection setup.
+5. **Root**: Application entry point and initialization. `AppInitializer` contains the startup bootstrap (it loads the Koin modules and runs one-time startup side effects); the Koin module definitions live alongside it in `Di.kt`.
 6. **Util**: Utility classes, extensions.

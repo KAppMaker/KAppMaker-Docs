@@ -5,7 +5,7 @@ sidebar_position: 7
 
 # DI (Dependency Injection)
 
-The project uses [Koin](https://insert-koin.io/) for Dependency Injection. DI setup is done in the `root/AppInitializer` file.
+The project uses [Koin](https://insert-koin.io/) for Dependency Injection. The Koin modules (`dataModule`, `domainModule`, `presentationModule`, and the `appModules` aggregate) are defined in the `root/Di.kt` file. The `root/AppInitializer` bootstrap loads them at startup via `startKoin { modules(appModules) }`.
 
 ## Key Concepts in Koin:
 
