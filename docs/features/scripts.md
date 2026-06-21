@@ -8,7 +8,7 @@ Helper scripts are located in the `MobileApp/scripts/` directory. Run all script
 
 ## Refactor Package
 
-Renames the app's package / `applicationId` / iOS bundle ID and display name across the whole project — Kotlin packages and directories, Gradle files, Firebase/Google-services configs, iOS `Info.plist` / `project.pbxproj`, GitHub publish workflows, and the helper scripts.
+Renames the app's package / `applicationId` / iOS bundle ID and display name across the whole project — Kotlin packages and directories, Gradle files, Firebase/Google-services configs, iOS `Info.plist` / `project.pbxproj`, GitHub publish workflows, the helper scripts, and package references in the docs/guidelines (READMEs, `AGENTS.md`, `skills/`, `AiGuidelines/`) — covering both the dotted id (`com.x.y`) and the slashed path (`com/x/y`) forms.
 
 ```bash
 # Full refactor — Kotlin packages + applicationId + bundle ID + app name:
