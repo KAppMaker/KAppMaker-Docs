@@ -4,7 +4,7 @@ sidebar_position: 18
 
 # Firebase Integration
 
-KAppMaker has a support for **Firebase** as a serverless backend for AI integration and other features like **Authentication**, **Push Notifications**, and **Landing Page Hosting**. Follow these steps carefully to set up Firebase and connect it with your app.
+KMPStarterKit has a support for **Firebase** as a serverless backend for AI integration and other features like **Authentication**, **Push Notifications**, and **Landing Page Hosting**. Follow these steps carefully to set up Firebase and connect it with your app.
 
 
 ## 1. Create New or Choose Existing a Firebase Project
@@ -189,7 +189,7 @@ For more detailed information you can check  **[Notifications](notifications)** 
 
 This is a simple app landing page template that you can use to showcase your app and deploy it into Firebase easily and free.  You can see the demo of the landing page of [AppIdeaHub](https://appideahub-kappmaker.web.app/). It has sections for a Hero, Problem, Features, and a Call-to-Action (CTA). It includes template Privacy Policy and Terms and Service files as well (but you should write your own according to your app, as this is just a template and not a legal document).
 
-You can also watch the video for App Landing Page setup: [https://www.youtube.com/watch?v=umuaJG4AO_Q](https://www.youtube.com/watch?v=umuaJG4AO_Q).
+<YouTube id="umuaJG4AO_Q" title="App Landing Page setup" />
 
 #### 1. Initialize Firebase Hosting
 

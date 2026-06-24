@@ -82,7 +82,7 @@ fun `clicking calls onClick`() = runComposeUiTest {
 
 ## Screenshot Regression Tests
 
-Powered by [Roborazzi](https://github.com/takahirom/roborazzi) + [ComposablePreviewScanner](https://github.com/sergio-sastre/ComposablePreviewScanner). Every `@Preview` under `com.measify.kappmaker.*` is automatically discovered, rendered via Robolectric, and snapshotted. **You don't write a test class** — just add a `@Preview` and re-run.
+Powered by [Roborazzi](https://github.com/takahirom/roborazzi) + [ComposablePreviewScanner](https://github.com/sergio-sastre/ComposablePreviewScanner). Every `@Preview` under `com.kotlinfoundation.kmpstarterkit.*` is automatically discovered, rendered via Robolectric, and snapshotted. **You don't write a test class** — just add a `@Preview` and re-run.
 
 ```bash
 # Refresh goldens after a deliberate UI change:

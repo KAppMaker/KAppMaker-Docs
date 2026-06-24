@@ -4,11 +4,11 @@ sidebar_position: 3
 
 # In-App Purchases & Subscriptions
 
-KAppMaker simplifies handling in-app purchases and subscriptions with support for two subscription providers: [Adapty](https://adapty.io/) (the default) and [RevenueCat](https://www.revenuecat.com/). You can switch between them at build time. KAppMaker supports both a remote paywall UI and a pre-configured subscription/in-app purchase screen. The remote paywall allows you to update pricing and product details directly from the provider's dashboard, without requiring an app update.
+KMPStarterKit simplifies handling in-app purchases and subscriptions with support for two subscription providers: [Adapty](https://adapty.io/) (the default) and [RevenueCat](https://www.revenuecat.com/). You can switch between them at build time. KMPStarterKit supports both a remote paywall UI and a pre-configured subscription/in-app purchase screen. The remote paywall allows you to update pricing and product details directly from the provider's dashboard, without requiring an app update.
 
 ### Choosing a Subscription Provider
 
-KAppMaker supports two subscription providers out of the box. The default is **Adapty**. You can switch between them by setting the `SUBSCRIPTION_PROVIDER` property in `gradle.properties`:
+KMPStarterKit supports two subscription providers out of the box. The default is **Adapty**. You can switch between them by setting the `SUBSCRIPTION_PROVIDER` property in `gradle.properties`:
 
 ```properties
 # Possible options: ADAPTY (default), REVENUECAT
@@ -42,11 +42,11 @@ The active provider is selected at compile time based on the `SUBSCRIPTION_PROVI
 4. **Enable In-App Purchase (For iOS)**:
     - In Xcode, go to your project settings.
     - Select your target, then navigate to the **Signing & Capabilities** tab.
-    - Click the "+" button and add the **In-App Purchase** capability.
+    - Click the **+** button and add the **In-App Purchase** capability.
 
 ### Entitlements in RevenueCat
 
-An **entitlement** in RevenueCat represents a specific access level or feature granted to the user upon purchase. By default, KAppMaker comes with one pre-configured entitlement named **"Premium"**.
+An **entitlement** in RevenueCat represents a specific access level or feature granted to the user upon purchase. By default, KMPStarterKit comes with one pre-configured entitlement named **"Premium"**.
 
 If you need to check whether a user has access to a specific entitlement, you can use the `hasPremiumAccess` field from the `currentUser` object. This checks whether the user has purchased the "Premium" subscription.
 
@@ -62,13 +62,13 @@ suspend fun hasPremiumAccess() = hasEntitlementAccess("gold") || hasEntitlementA
 
 ### Showing Remote or Custom Paywall UI
 
-By default, KAppMaker shows the **pre-configured custom paywall screen** (`SHOW_REMOTE_PAYWALL = false` in `FeatureFlagManager`). It fully handles displaying products/subscriptions, purchasing, and restoring purchases according to App Store and Play Store guidelines, and gives you full design control because the entire UI lives in your codebase.
+By default, KMPStarterKit shows the **pre-configured custom paywall screen** (`SHOW_REMOTE_PAYWALL = false` in `FeatureFlagManager`). It fully handles displaying products/subscriptions, purchasing, and restoring purchases according to App Store and Play Store guidelines, and gives you full design control because the entire UI lives in your codebase.
 
-If you'd rather manage the paywall remotely — adjust pricing, swap copy, run experiments without shipping a new build — flip `SHOW_REMOTE_PAYWALL` to `true` in `FeatureFlagManager` (located at `data/source/featureflag/`). KAppMaker then renders the provider's built-in remote paywall UI from RevenueCat or Adapty. Since this is a feature flag, you can also toggle it remotely via Firebase Remote Config without an app update.
+If you'd rather manage the paywall remotely — adjust pricing, swap copy, run experiments without shipping a new build — flip `SHOW_REMOTE_PAYWALL` to `true` in `FeatureFlagManager` (located at `data/source/featureflag/`). KMPStarterKit then renders the provider's built-in remote paywall UI from RevenueCat or Adapty. Since this is a feature flag, you can also toggle it remotely via Firebase Remote Config without an app update.
 
 ### Custom Paywall Architecture
 
-The custom paywall lives at `shared/src/commonMain/kotlin/com/measify/kappmaker/presentation/screens/paywall/` and is split into three layers so that screens stay display-only and the formatting logic is unit-testable in isolation.
+The custom paywall lives at `shared/src/commonMain/kotlin/com/kotlinfoundation/kmpstarterkit/presentation/screens/paywall/` and is split into three layers so that screens stay display-only and the formatting logic is unit-testable in isolation.
 
 ```
 PaywallScreen.kt              # router — overlays + dispatches to a child screen
@@ -158,7 +158,7 @@ When you need real PNGs of the paywall to upload to the App Store / Play Store (
 ./scripts/generate_store_screenshots.sh
 ```
 
-Output lands in `distribution/store_screenshots/<locale>/<device>/<tag>_<methodName>.png` — pure pixel captures at the storefront dimensions, ready to upload. KAppMaker ships with paywall captures already wired up: `paywall_review_screenshot_subscription` (no-trial / trial / paid-intro variants) and `paywall_review_screenshot_credits`.
+Output lands in `distribution/store_screenshots/<locale>/<device>/<tag>_<methodName>.png` — pure pixel captures at the storefront dimensions, ready to upload. KMPStarterKit ships with paywall captures already wired up: `paywall_review_screenshot_subscription` (no-trial / trial / paid-intro variants) and `paywall_review_screenshot_credits`.
 
 To add your own, drop a `@StoreScreenshot`-tagged preview next to the screen and call `PaywallPreviewData.…`:
 

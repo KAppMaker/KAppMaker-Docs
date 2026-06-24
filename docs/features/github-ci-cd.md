@@ -4,7 +4,7 @@ sidebar_position: 10
 
 # GitHub CI/CD Actions
 
-KAppMaker uses GitHub Actions to automatically gate PRs and release the Android and iOS apps. **Workflows live at the repo root in `.github/workflows/`** (not under `MobileApp/`) so GitHub Actions discovers them. Each workflow uses `defaults.run.working-directory: MobileApp` to keep gradle commands clean.
+KMPStarterKit uses GitHub Actions to automatically gate PRs and release the Android and iOS apps. **Workflows live at the repo root in `.github/workflows/`** (not under `MobileApp/`) so GitHub Actions discovers them. Each workflow uses `defaults.run.working-directory: MobileApp` to keep gradle commands clean.
 
 Make sure to add the necessary [Github Repository Secrets](#github-secrets).
 
@@ -35,7 +35,7 @@ Make sure to add the necessary [Github Repository Secrets](#github-secrets).
 These workflows make it easier to gate, build, and release the apps — ensuring every change is verified and shipped automatically.
 
 ## GitHub Secrets
-KAppMaker uses several secrets to securely manage builds, authentication, caching, and publishing. Below are the important secrets you need to add to your GitHub repository:
+KMPStarterKit uses several secrets to securely manage builds, authentication, caching, and publishing. Below are the important secrets you need to add to your GitHub repository:
 
 ### How to Add Secrets in GitHub
 
@@ -83,7 +83,7 @@ To upload the Android app to the Play Store, use a Google Play service account. 
 - **Name**: `GOOGLE_WEB_CLIENT_ID`
 - **Value**: Google web client ID for authentication. See [Authentication](../features/auth)
 
-#### In-App Purchase/Subcription - RevenueCat Keys 
+#### In-App Purchase/Subscription - RevenueCat Keys 
 
 See [In-App Purchases](../features/inapp-purchases-subscription)
 - **Name**: `REVENUECAT_ANDROID_API_KEY`

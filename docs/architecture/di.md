@@ -7,16 +7,15 @@ sidebar_position: 7
 
 The project uses [Koin](https://insert-koin.io/) for Dependency Injection. The Koin modules (`dataModule`, `domainModule`, `presentationModule`, and the `appModules` aggregate) are defined in the `root/Di.kt` file. The `root/AppInitializer` bootstrap loads them at startup via `startKoin { modules(appModules) }`.
 
-## Key Concepts in Koin:
+## Koin APIs you'll use
 
-- **single**: Used for creating singleton instances, meaning only one instance of the class will be created and shared.
-- **factory**: Creates a new instance of the class each time it's injected.
-- **bind**: Used to define the interface or superclass that the created instance will be bound to.
-    Example: `singleOf(::UserPreferencesImpl) bind UserPreferences::class`
-- **singleOf**: Another way to declare a single using DSL.
-- **factoryOf**: Another way to declare a factory using DSL.
-- **viewModelOf**: Used for registering UiStateHolders (ViewModels) in the presentation module.
-    Example: `viewModelOf(::HomeUiStateHolder)`
+These are the Koin APIs you reach for when registering dependencies in KMPStarterKit:
+
+- `single` — registers a singleton: one shared instance for the whole app.
+- `factory` — creates a new instance every time it's injected.
+- `singleOf` / `factoryOf` — the constructor-reference DSL form of `single` / `factory` (e.g. `singleOf(::UserRepository)`).
+- `bind` — binds the instance to an interface or superclass. Example: `singleOf(::UserPreferencesImpl) bind UserPreferences::class`.
+- `viewModelOf` — registers a `UiStateHolder` (ViewModel) in the presentation module. Example: `viewModelOf(::HomeUiStateHolder)`.
 
 
 ## Example of DI Setup

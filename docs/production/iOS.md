@@ -8,9 +8,9 @@ sidebar_position: 2
 
 The simplest method for publishing your ios app is directly through Xcode. Here are the steps:
 
-1. **Open Your Project**: Launch Xcode and open your project.
-2. **Select the Target**: Make sure you select the correct target for your app.
-3. **Archive Your App**:
+1. Launch Xcode and open your project.
+2. Select the correct target for your app.
+3. Archive your app:
    - Go to **Product > Archive**. 
    - Wait for the archive process to complete, and the Organizer window will appear.
 4. **Upload to App Store Connect**:
@@ -100,9 +100,9 @@ To automate the publishing process using GitHub Actions, follow these steps:
 
 Some libraries link their native iOS SDK through **Swift Package Manager (SwiftPM)** instead of CocoaPods. This isn't specific to one feature — any library you add now or in the future can do it. For example, KMPNotifier's push module (`kmpnotifier-push-firebase`) pulls `firebase-ios-sdk` (FirebaseMessaging) via SwiftPM.
 
-When the shared framework consumes a SwiftPM dependency and the iOS app uses Kotlin's **embed-and-sign** integration (KAppMaker does), Kotlin 2.4+ needs a small generated **linkage package** so those SwiftPM products actually link into the final app binary. KAppMaker ships this already wired up:
+When the shared framework consumes a SwiftPM dependency and the iOS app uses Kotlin's **embed-and-sign** integration (KMPStarterKit does), Kotlin 2.4+ needs a small generated **linkage package** so those SwiftPM products actually link into the final app binary. KMPStarterKit ships this already wired up:
 
-- `MobileApp/iosApp/KotlinMultiplatformLinkedPackage/` — a generated local Swift package that mirrors the shared framework's SwiftPM products and forces them to link. It's committed, so a fresh checkout (and every app generated from KAppMaker) builds without extra steps.
+- `MobileApp/iosApp/KotlinMultiplatformLinkedPackage/` — a generated local Swift package that mirrors the shared framework's SwiftPM products and forces them to link. It's committed, so a fresh checkout (and every app generated from KMPStarterKit) builds without extra steps.
 - `iosApp.xcodeproj` already has the `embedAndSignAppleFrameworkForXcode` run-script build phase (runs on every build) and `ENABLE_USER_SCRIPT_SANDBOXING = NO` (Xcode 16+ would otherwise block that phase).
 
 **You only regenerate the linkage package when the set of SwiftPM dependencies changes** — e.g. you add a new library whose iOS SDK is consumed via SwiftPM, or you bump one to a version that changes its products. Routine code or non-SwiftPM dependency changes need nothing.

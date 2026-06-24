@@ -4,47 +4,54 @@ sidebar_position: 3
 
 # Data Package
 
-The **Data** package is responsible for managing data sources and provides a structured way to interact with various external services, such as databases, APIs, preferences. 
+The **Data** package manages data sources and provides a structured way to interact with external services such as databases, APIs, and preferences.
 
-![Data Package](/img/architecture_data.png)  
+```
+data/
+├── repository/    repositories that wrap data access + error handling
+└── source/
+    ├── remote/        HttpClientFactory.kt, apiservices/, request/, response/
+    ├── local/         Room 3: AppDatabase.kt, DatabaseModule.kt, dao/, entity/
+    ├── preferences/   UserPreferences.kt (DataStore)
+    ├── featureflag/   FeatureFlagManager.kt (Firebase Remote Config)
+    └── ai/            AI generation data source
+```
 
+## repository
 
-## Repository Package
+The `repository/` package is the abstraction layer between data sources and the rest of
+the app. It encapsulates how data is read and persisted, keeping that consistent across
+local databases, remote APIs, and in-memory storage.
 
-The *Repository Package* serves as an abstraction layer between the data sources and the rest of the application. It encapsulates the logic for accessing data, ensuring that data retrieval and persistence are handled consistently across different sources, such as local databases, remote APIs, or in-memory storage.
+- `UserRepository`
+   - `currentUser` — a flow emitting the current user's information, managing authentication
+     state and premium access.
+   - `hasPremiumAccess()` — whether the current user has premium access. By default it checks
+     the entitlement key `Premium`; change this key in `util/Constants.kt` to suit your app.
+   - `hasEntitlementAccess(key: String)` — checks access to a specific entitlement, useful
+     when you have multiple tiers (e.g. `Gold` and `Premium`).
+   - `logOut()` — logs the user out of both the subscription provider and Firebase.
+   - `deleteAccount()` — deletes the user's account and logs them out.
+- `SubscriptionRepository` — in-app purchase and subscription state, wrapping the subscription provider (Adapty or RevenueCat).
+- `GenerationRepository` — AI generation workflows: uploading files, triggering generation, and caching results (in-memory + Room).
+- `CreditRepository` — credit balance and transactions with a configurable credit system (one-time bonuses, recurring grants).
 
-- **UserRepository**
-   - `currentUser`: A flow that emits the current user’s information, managing the authentication state and premium access status.
-   - `hasPremiumAccess()`: Checks if the current user has premium access. By default it checks if the user has entitlement access for the key *"Premium"*. However, you can change this key in the `util/Constants` file to suit your application’s needs.
-   - `hasEntitlementAccess(key:String)`: If you have created multiple entitlements (e.g., different subscription tiers such as "Gold" and "Premium"), you can use this method to check access to these specific entitlements.
-   - `logOut()`: Logs the user out from both the subscription provider and Firebase.
-   - `deleteAccount()`: Deletes the user’s account and logs them out.
+## source
 
-- **SubscriptionRepository**: Manages in-app purchase and subscription state, wrapping the subscription provider (RevenueCat or Adapty).
-
-- **GenerationRepository**: Handles AI generation workflows including uploading files, triggering generation, and caching results (in-memory + Room database).
-
-- **CreditRepository**: Manages credit balance and transactions with a configurable credit system (one-time bonuses, recurring grants).
-
-## Source Package
-
-The **Source** component is divided into multiple parts: **Preferences**, **Remote**, **Local**, and **FeatureFlag**.
+The `source/` package is split into **Preferences**, **Remote**, **Local**, and **FeatureFlag**.
 
 ### Preferences
 
-The **UserPreferences** manages key-value pairs for user preferences, allowing for easy storage and retrieval of user settings, such as, saving and retrieving strings, integers, and booleans.
+`UserPreferences` manages key/value user settings — storing and retrieving strings, integers, and booleans.
 
 ### Remote
 
-The *Remote* package is responsible for making API requests and handling responses. This includes:
+The `remote/` package makes API requests and handles responses. It contains:
 
-- **Request Models**: Typically, it’s best practice to create separate data models for requests, which define the structure of the data being sent to the server.
-
-- **Response Models**: Similarly, defining response data models helps in managing the data received from the server. These models can be mapped to appropriate classes for easy access.
-
-- **ApiService**: Manages network requests, such as sending and receiving data. For example, the `getExampleData()` method sends a POST request and retrieves data from the server.
-
-- **HttpClientFactory**: Provides a configured HTTP client, ensuring proper headers and logging for network requests, including user authentication tokens.
+- Request models — separate data models defining the structure of data sent to the server.
+- Response models — data models for data received from the server, mapped to domain classes for easy access.
+- `ApiService` — network requests. For example, `getExampleData()` sends a POST request and returns data from the server.
+- `HttpClientFactory` — a configured HTTP client with the right headers and logging, including user authentication tokens.
 
 ### Local
 
@@ -57,15 +64,18 @@ Manages feature flags via Firebase Remote Config, allowing you to enable/disable
 
 ## BackgroundExecutor
 
-The **BackgroundExecutor** class facilitates executing suspending functions in a specified coroutine context, primarily for background tasks. It defaults to `Dispatchers.IO`. This makes it easy for testing as well.
+`BackgroundExecutor` runs suspending functions in a given coroutine context (defaulting to
+`Dispatchers.IO`), primarily for background tasks. Injecting the context also makes it easy
+to test.
 
-It takes a suspending function and returns a `Result<T>`, handling exceptions gracefully, returns `Result.failure(e)` for failures.
+It takes a suspending function and returns a `Result<T>`, handling exceptions gracefully and
+returning `Result.failure(e)` on failure.
 
-   #### Example Usage:
+Example:
 
-   ```kotlin
-   suspend fun logOut() = backgroundExecutor.execute {
-      Firebase.auth.signOut()
-      Result.success(Unit)
-   }
-   ```
+```kotlin
+suspend fun logOut() = backgroundExecutor.execute {
+    Firebase.auth.signOut()
+    Result.success(Unit)
+}
+```

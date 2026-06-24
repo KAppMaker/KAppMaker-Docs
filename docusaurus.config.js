@@ -8,7 +8,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'KAppMaker Documentation',
+  title: 'KMPStarterKit Documentation',
   tagline: 'Kotlin Multiplatform Boilerplate Starter for Android & iOS',
   favicon: 'img/favicon.ico',
 
@@ -72,15 +72,46 @@ const config = {
     ],
   ],
 
+  // Offline full-text search (no Algolia account needed).
+  themes: [
+    [
+      '@easyops-cn/docusaurus-search-local',
+      /** @type {import('@easyops-cn/docusaurus-search-local').PluginOptions} */
+      ({
+        hashed: true,
+        indexDocs: true,
+        indexBlog: false,
+        docsRouteBasePath: '/',
+        highlightSearchTermsOnTargetPage: true,
+        searchResultLimits: 8,
+      }),
+    ],
+  ],
+
+  // Preserve old URLs for pages that moved during the docs restructure.
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          {
+            from: '/getting-started/requirements',
+            to: '/getting-started/first-app',
+          },
+        ],
+      },
+    ],
+  ],
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
       image: 'img/facebook-card.png',
       navbar: {
-        title: 'KAppMaker',
+        title: 'KMPStarterKit',
         logo: {
-          alt: 'KAppMaker Logo',
+          alt: 'KMPStarterKit Logo',
           src: 'img/logo.png',
         },
         items: [
@@ -95,7 +126,7 @@ const config = {
 
           // Primary button
           {
-            label: 'Get KAppMaker',
+            label: 'Get KMPStarterKit',
             href: 'https://kappmaker.com/#pricing',
             position: 'right',
             className: 'button button--primary', // Adding the primary button class
@@ -107,7 +138,7 @@ const config = {
       footer: {
         style: 'dark',
        
-        copyright: `Copyright © ${new Date().getFullYear()} KAppMaker`,
+        copyright: `Copyright © ${new Date().getFullYear()} KMPStarterKit`,
       },
       prism: {
         theme: prismThemes.github,

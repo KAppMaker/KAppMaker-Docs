@@ -4,7 +4,7 @@ sidebar_position: 20
 
 # Runtime Permissions
 
-KAppMaker ships a small, app-level permissions API backed by [Calf](https://github.com/MohamedRejeb/Calf). It shows real system permission dialogs on Android and iOS, and acts as a granted no-op on desktop and web — so shared code never needs platform checks.
+KMPStarterKit ships a small, app-level permissions API backed by [Calf](https://github.com/MohamedRejeb/Calf). It shows real system permission dialogs on Android and iOS, and acts as a granted no-op on desktop and web — so shared code never needs platform checks.
 
 ### Using a permission
 

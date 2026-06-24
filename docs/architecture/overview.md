@@ -2,31 +2,54 @@
 sidebar_position: 1
 ---
 
-# Architecture Overview!
+# Architecture Overview
 
+KMPStarterKit follows a layered architecture with a single, one-way dependency
+flow. Each layer depends only on the one below it:
 
-## Architectural Illustration
+```
+Presentation   screens, UiStateHolders, components, navigation
+     │  depends on
+Domain         models, exceptions, use cases (only when justified)
+     │  depends on
+Data           repositories, API services, local DB, preferences, feature flags
+```
 
-The images below illustrates the high-level architecture of the KAppMaker project, showcasing the interaction between different components:
+The shared code is organized into these top-level packages under
+`com.kotlinfoundation.kmpstarterkit`:
 
-<!-- Set image height smaller -->
-<!-- <img src="/img/architecture_1.png" alt="High-Level Architecture" height="400"/> -->
-<!-- ![High-Level Architecture](images/architecture_1.png) -->
+```
+com.kotlinfoundation.kmpstarterkit
+├── data/          repositories + data sources (remote, local, preferences, featureflag)
+├── domain/        models, exceptions, and use cases
+├── presentation/  screens, components, and navigation
+├── root/          App, AppInitializer, Di (entry point + bootstrap)
+└── util/          logging, coroutine scopes, constants, extensions, platform code
+```
 
-<div style={{ display: 'flex', justifyContent: 'space-between' }}>
-    <img src="/img/architecture_1.png" alt="High-Level Architecture of KAppMaker" height="500" style={{ marginRight: '10px' }} />
-    <img src="/img/architecture_2.png" alt="High-Level Architecture of KAppMaker" height="500" style={{ marginRight: '10px' }} />
-    <img src="/img/architecture_3.png" alt="High-Level Architecture of KAppMaker" height="500" />
-</div>
+## Layers
 
+- **[Data](data.md)** — the source of truth for app data.
+  - `repository/` — repositories that expose data to the rest of the app and wrap
+    error handling (`UserRepository`, `SubscriptionRepository`, …).
+  - `source/remote/` — Ktor API services and request/response models.
+  - `source/local/` — the Room 3 database, DAOs, and entities (runs on every platform).
+  - `source/preferences/` — key/value user preferences backed by DataStore.
+  - `source/featureflag/` — feature flags backed by Firebase Remote Config.
 
-## Detailed Architecture
+- **[Domain](domain.md)** — pure business logic, free of platform and UI concerns.
+  - `model/` — immutable domain entities.
+  - `exceptions/` — domain-specific exceptions.
+  - `usecase/` — use cases, added only when real orchestration is needed.
 
-The KAppMaker architecture consists of three main layers/packages (domain, data, presentation):
+- **[Presentation](presentation.md)** — the UI.
+  - `screens/` — one folder per screen, each with its `Screen`, `UiState`, and `UiStateHolder`.
+  - `components/` — reusable composables shared across screens.
+  - `navigation/` — see the dedicated [Navigation](navigation.md) page.
 
-1. **[Domain](domain)**: Contains business logic, domain models and exceptions.
-2. **[Data](data)**: Manages data sources, including user preferences and remote APIs and repositories.
-3. **[Presentation](presentation)**: Contains UI components, theme (color, font), and screens. Each screen has its own UiState, UiEvent (user actions), and Composable Screen.
-4. **[Navigation](navigation)**: Routes, the back-stack model, and the root `AppNavigation` composable. Lives at `presentation/navigation/`; feature folders stay free of navigation glue.
-5. **Root**: Application entry point and initialization. `AppInitializer` contains the startup bootstrap (it loads the Koin modules and runs one-time startup side effects); the Koin module definitions live alongside it in `Di.kt`.
-6. **Util**: Utility classes, extensions.
+- **Root** — the application entry point. `AppInitializer` runs the startup bootstrap
+  (loads the Koin modules and one-time side effects); the module definitions live next
+  to it in `Di.kt`. See [Dependency Injection](di.md).
+
+- **[Util](util.md)** — cross-cutting helpers: logging, coroutine scopes, constants,
+  extensions, and `expect`/`actual` platform code.

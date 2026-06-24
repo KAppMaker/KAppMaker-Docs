@@ -19,9 +19,9 @@ Drop a `@Preview @StoreScreenshot @Composable` function next to the screen it pr
 ```kotlin
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.measify.kappmaker.designsystem.theme.AppTheme
-import com.measify.kappmaker.util.StoreDevice
-import com.measify.kappmaker.util.StoreScreenshot
+import com.kotlinfoundation.kmpstarterkit.designsystem.theme.AppTheme
+import com.kotlinfoundation.kmpstarterkit.util.StoreDevice
+import com.kotlinfoundation.kmpstarterkit.util.StoreScreenshot
 
 @Preview
 @StoreScreenshot(device = StoreDevice.IPHONE_6_5, locale = "en", tag = "01-home")
@@ -40,13 +40,13 @@ The body of the preview should look exactly like what you want uploaded to the s
 ## How it works
 
 `@StoreScreenshot` and the `StoreDevice` enum live at
-[`shared/src/commonMain/kotlin/com/measify/kappmaker/util/StoreScreenshot.kt`](https://github.com/KAppMaker/KAppMaker-All/blob/main/MobileApp/shared/src/commonMain/kotlin/com/measify/kappmaker/util/StoreScreenshot.kt).
+[`shared/src/commonMain/kotlin/com/kotlinfoundation/kmpstarterkit/util/StoreScreenshot.kt`](https://github.com/KAppMaker/KAppMaker-All/blob/main/MobileApp/shared/src/commonMain/kotlin/com/kotlinfoundation/kmpstarterkit/util/StoreScreenshot.kt).
 
-The annotation is picked up by [`StoreScreenshotGeneratorTest`](https://github.com/KAppMaker/KAppMaker-All/blob/main/MobileApp/shared/src/androidHostTest/kotlin/com/measify/kappmaker/screenshot/StoreScreenshotGeneratorTest.kt), which uses [Roborazzi](https://github.com/takahirom/roborazzi) + [ComposablePreviewScanner](https://github.com/sergio-sastre/ComposablePreviewScanner) to render at the exact dimensions and write the PNG. Roborazzi's `composeTestRule` + `previewDevice` options resize the test activity surface so the captured bitmap matches the storefront resolution.
+The annotation is picked up by [`StoreScreenshotGeneratorTest`](https://github.com/KAppMaker/KAppMaker-All/blob/main/MobileApp/shared/src/androidHostTest/kotlin/com/kotlinfoundation/kmpstarterkit/screenshot/StoreScreenshotGeneratorTest.kt), which uses [Roborazzi](https://github.com/takahirom/roborazzi) + [ComposablePreviewScanner](https://github.com/sergio-sastre/ComposablePreviewScanner) to render at the exact dimensions and write the PNG. Roborazzi's `composeTestRule` + `previewDevice` options resize the test activity surface so the captured bitmap matches the storefront resolution.
 
 ## `StoreDevice` enum — built-in storefront sizes
 
-The enum [`StoreDevice`](https://github.com/KAppMaker/KAppMaker-All/blob/main/MobileApp/shared/src/commonMain/kotlin/com/measify/kappmaker/screenshot/StoreScreenshot.kt) ships with current Apple + Google storefront-required sizes:
+The enum [`StoreDevice`](https://github.com/KAppMaker/KAppMaker-All/blob/main/MobileApp/shared/src/commonMain/kotlin/com/kotlinfoundation/kmpstarterkit/screenshot/StoreScreenshot.kt) ships with current Apple + Google storefront-required sizes:
 
 | Value | Width × Height | Usage |
 |-------|-----------------|-------|

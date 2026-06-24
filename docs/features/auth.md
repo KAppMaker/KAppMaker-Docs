@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Authentication
 
-KAppMaker provides an easy setup for authentication using Firebase Authentication and the [KMPAuth](https://github.com/mirzemehdi/KMPAuth) library. KAppMaker already supports multiple authentication providers, including Google and Apple, as well as functionality for getting the current user, logging out, and deleting a user. This section guides you through the necessary steps to configure user authentication in your application.
+KMPStarterKit provides an easy setup for authentication using Firebase Authentication and the [KMPAuth](https://github.com/mirzemehdi/KMPAuth) library. KMPStarterKit already supports multiple authentication providers, including Google and Apple, as well as functionality for getting the current user, logging out, and deleting a user. This section guides you through the necessary steps to configure user authentication in your application.
 
 
 ## Setting Up Firebase Authentication
@@ -71,7 +71,7 @@ For Apple Sign-In to work in iOS, follow these steps:
 
     - In Xcode, go to your project settings.
     - Select your target, then navigate to the **Signing & Capabilities** tab.
-    - Click the "+" button and add the **Sign In with Apple** capability.  
+    - Click the **+** button and add the **Sign In with Apple** capability.  
 
 #### Setting Up Apple Sign In for Android
 For Apple Sign-In to work in android, follow these steps:
@@ -79,7 +79,7 @@ For Apple Sign-In to work in android, follow these steps:
 1. **Create a New Auth Key**:
    - Visit [Apple Developer Account](https://developer.apple.com/account/).
    - Go to **Certificates, Identifiers & Profiles** > **Keys**.
-   - Click the "+" button and provide a key name.
+   - Click the **+** button and provide a key name.
    - Enable **Sign In with Apple**.
    - Select **Configure**, then choose the **Primary App ID**.
    - Click **Continue** and download the `.p8` file. (Keep it secure.)
@@ -87,7 +87,7 @@ For Apple Sign-In to work in android, follow these steps:
 
 2. **Create a Service ID**:
    - Go to **Identifiers** > **Service IDs**.
-   - Click the "+" button to create a new Service ID.
+   - Click the **+** button to create a new Service ID.
    - Provide a **Description** and **Identifier** (e.g., `com.yourcompany.yourapp.auth`).
    - Enable **Sign In with Apple** and click **Configure**.
    - In the configuration, add the **Primary App ID**.
@@ -114,7 +114,7 @@ For Apple Sign-In to work in android, follow these steps:
 - **In-place mode toggle** — a "New here? Create account" / "Already have an account? Sign in" row at the bottom flips the screen between modes without navigating. The toolbar title and main heading update accordingly.
 - **Initial mode** — `SignInScreenRoute(isSignIn: Boolean = false)` chooses which mode the screen opens in. Pass `true` to land directly on sign-in.
 - **Existing-account fallback** — if the user attempts to create an account that already exists (`UserAlreadyExistsException` from the OAuth provider), the screen automatically switches to sign-in mode and surfaces a message.
-- **Continue as guest** — a text button that calls `UserRepository.continueAsGuest()`, which signs the user in anonymously if they aren't already (KAppMaker also auto-signs anonymously on first launch via `signInAnonymouslyIfNecessary()`), then dismisses the screen.
+- **Continue as guest** — a text button that calls `UserRepository.continueAsGuest()`, which signs the user in anonymously if they aren't already (KMPStarterKit also auto-signs anonymously on first launch via `signInAnonymouslyIfNecessary()`), then dismisses the screen.
 
 ## User Management
 

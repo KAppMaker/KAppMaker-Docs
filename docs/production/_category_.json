@@ -1,8 +1,0 @@
-{
-  "label": "Production",
-  "position": 7,
-  "link": {
-    "type": "generated-index",
-    "description": "Production steps before releasing android and ios apps"
-  }
-}

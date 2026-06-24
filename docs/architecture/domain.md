@@ -6,22 +6,33 @@ sidebar_position: 2
 
 The **Domain** package contains the essential business logic and core entities of the application.
 
-![Domain Package](/img/architecture_domain.png)  
+```
+domain/
+├── model/         immutable domain entities
+│   ├── User.kt, AuthProvider.kt, Subscription.kt, ExampleModel.kt
+│   ├── credit/        CreditSystemConfig.kt, CreditTransaction.kt, RecurringCredit.kt, …
+│   └── generation/    GenerationInput.kt, GenerationOutput.kt, GenerationParam.kt, …
+├── exceptions/    domain-specific exceptions
+└── usecase/       use cases, added only when orchestration is justified
+```
 
+## model
 
-## Model Package
-Defines key data classes representing core business entities:
-   - **User**: Represents a user with properties like `id`, `email`, and `hasPremiumAccess`.
-   - **AuthProvider**: Enum for authentication methods (e.g., GOOGLE, APPLE).
-   - **Subscription**: Represents subscription information and access levels.
-   - **GenerationOutput / GenerationInput**: Models for AI generation workflow.
-   - **CreditTransaction / CreditSystemConfig**: Models for the credit system (balance, transactions, configuration).
+Immutable `data class`es representing core business entities:
 
-## Exceptions Package
+- `User` — a user, with properties like `id`, `email`, and `hasPremiumAccess`.
+- `AuthProvider` — enum of authentication methods (e.g. `GOOGLE`, `APPLE`).
+- `Subscription` — subscription information and access levels.
+- `GenerationInput` / `GenerationOutput` — the AI generation workflow.
+- `CreditTransaction` / `CreditSystemConfig` — the credit system (balance, transactions, configuration).
 
-Contains custom exception classes that handle specific error scenarios within the application.
+## exceptions
 
-- **UnAuthorizedException**: Thrown when a user attempts to perform an operation without being logged in. In your UiStateHolder, you can catch this exception and navigate to the sign-in screen. See **ProfileUiStateHolder** for an example.
-- **PurchaseRequiredException**: Thrown when an operation requires a premium subscription that the user does not have.
-- **CreditRequiredException**: Thrown when an operation requires credits that the user does not have sufficient balance for.
-- **UserAlreadyExistsException**: Thrown when attempting to create a user that already exists.
+Domain-specific exceptions for known error scenarios:
+
+- `UnAuthorizedException` — the user tried to perform an operation while logged out. Catch
+  it in your `UiStateHolder` and navigate to the sign-in screen — see `ProfileUiStateHolder`
+  for an example.
+- `PurchaseRequiredException` — the operation requires a premium subscription the user doesn't have.
+- `CreditRequiredException` — the operation requires more credits than the user's balance.
+- `UserAlreadyExistsException` — attempted to create a user that already exists.

@@ -4,7 +4,7 @@ sidebar_position: 5
 
 # Network
 
-KAppMaker uses [Ktor](https://ktor.io/) for network operations to manage HTTP requests and responses across different platforms.
+KMPStarterKit uses [Ktor](https://ktor.io/) for network operations to manage HTTP requests and responses across different platforms.
 
 ## HttpClientFactory
 

@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Fastlane
 
-KAppMaker includes pre-configured [Fastlane](https://fastlane.tools/) lanes for building and uploading your app to the Google Play Store and Apple App Store. The Fastlane configuration is in `MobileApp/fastlane/Fastfile`.
+KMPStarterKit includes pre-configured [Fastlane](https://fastlane.tools/) lanes for building and uploading your app to the Google Play Store and Apple App Store. The Fastlane configuration is in `MobileApp/fastlane/Fastfile`.
 
 All Fastlane commands should be run from the `MobileApp/` directory.
 
