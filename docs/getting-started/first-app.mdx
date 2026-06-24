@@ -44,40 +44,41 @@ The repo layout:
 - `Web/` — Firebase Hosting landing page + Cloud Functions (AI backend)
 - `Documentation/` — this site (Docusaurus, git submodule)
 
-## 2. Open in Android Studio
+## 2. Open and run the Android app
 
-Open the `MobileApp/` folder in Android Studio and let Gradle sync.
+Open the `MobileApp/` folder in Android Studio, let Gradle sync, then run the Android app.
 
-## 3. Run the Android app
+## 3. Run the iOS app
 
-Once the sync completes, run the Android app.
-
-## 4. Set up the iOS app
-
-After the Android app runs, set up iOS. The iOS app uses Swift Package Manager for its
-native dependencies (Firebase, Google Mobile Ads, etc.) — there is no CocoaPods step.
-Xcode resolves the packages automatically the first time you open the project.
+Open `iosApp/iosApp.xcodeproj` in Xcode. The iOS app uses Swift Package Manager for its
+native dependencies (Firebase, Google Mobile Ads, etc.) — no CocoaPods step — so Xcode
+resolves the packages automatically the first time. Wait for resolution to finish, then run.
 
 :::note SwiftPM-backed dependencies
 Some libraries link their native iOS SDK through Swift Package Manager. Those need a
-committed linkage package (`iosApp/KotlinMultiplatformLinkedPackage/`) plus
-embed-and-sign wiring, which ships ready to use. You only regenerate it when the set of
-SwiftPM dependencies changes. See [iOS Production](../production/iOS.md#swiftpm-dependencies--the-linkage-package)
-for details.
+committed linkage package (`iosApp/KotlinMultiplatformLinkedPackage/`) plus embed-and-sign
+wiring, which ships ready to use. You only regenerate it when the set of SwiftPM dependencies
+changes. See [iOS Production](../production/iOS.md#swiftpm-dependencies--the-linkage-package) for details.
 :::
 
-## 5. Open the iOS project in Xcode
+## 4. Run on Desktop and Web (optional)
 
-Open `iosApp/iosApp.xcodeproj` in Xcode (there is no `.xcworkspace` — the project is
-SwiftPM-only). Wait for package resolution to finish, then run the app. At this point
-both the Android and iOS apps should run.
+The same shared app also targets JVM Desktop and Web (Wasm). Run either from `MobileApp/`:
 
-## 6. You're set up
+```bash
+# Desktop (JVM):
+./gradlew :desktopApp:run
 
-Both apps now run, with authentication, notifications, and in-app purchases already
+# Web (Wasm) dev server:
+./gradlew :webApp:wasmJsBrowserDevelopmentRun
+```
+
+## 5. You're set up
+
+Your apps now run, with authentication, notifications, and in-app purchases already
 wired up. Next, make the app your own.
 
-## 7. Change the application / bundle ID and name
+## 6. Change the application / bundle ID and name
 
 Run the `refactor_package.sh` script (from `MobileApp/`) to set your app ID and display
 name. The Kotlin/Java package structure (`package com.example.app`) is independent of the
@@ -107,7 +108,7 @@ before running it, and reopen it afterward to pick up the changes.
 
 Re-sync Gradle once and rebuild to make sure all changes applied.
 
-## 8. Keep your repository up to date
+## 7. Keep your repository up to date
 
 To pull the latest changes, point `origin` at your own repository, then merge updates
 from the upstream monorepo:
