@@ -10,7 +10,7 @@ function enhanceCheckboxes(pathname) {
   if (typeof document === 'undefined') return;
 
   const boxes = document.querySelectorAll(
-    '.markdown li.task-list-item > input[type="checkbox"]',
+    '.markdown li.task-list-item input[type="checkbox"]',
   );
   if (!boxes.length) return;
 
