@@ -20,20 +20,15 @@ Before you start, make sure you have:
 - JDK 17 or later
 - Git
 
-The project pins its own Kotlin version (currently `2.4.0`) through Gradle, so you
-do not install Kotlin separately.
-
 :::tip Verify your environment
 Install the [Kotlin Multiplatform IDE plugin](https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform)
-for Android Studio / IntelliJ — it runs preflight checks on any OS. On macOS you can
-alternatively run [KDoctor](https://github.com/Kotlin/kdoctor) (macOS only).
+for Android Studio / IntelliJ — it runs preflight checks on your environment.
 :::
 
 ## 1. Fork or clone the repository
 
-Clone or fork the repository to your machine (make sure your new repo is private).
-KMPStarterKit is distributed as a single monorepo containing the KMP mobile app, the
-web backend + landing page, and this documentation:
+Clone or fork the repository to your machine. KMPStarterKit is distributed as a single
+monorepo containing the KMP mobile app, the web backend + landing page, and this documentation:
 
 SSH:
 ```bash
@@ -51,19 +46,11 @@ The repo layout:
 
 ## 2. Open in Android Studio
 
-Open the `MobileApp/` folder in Android Studio. On the first attempt the project may
-fail to sync because of missing authentication and subscription keys. Add the following
-keys with dummy values to `MobileApp/local.properties`:
-
-```properties
-GOOGLE_WEB_CLIENT_ID=test
-SUBSCRIPTION_PROVIDER_ANDROID_API_KEY=test
-SUBSCRIPTION_PROVIDER_IOS_API_KEY=test
-```
+Open the `MobileApp/` folder in Android Studio and let Gradle sync.
 
 ## 3. Run the Android app
 
-Sync the project again. Once the sync completes, run the Android app.
+Once the sync completes, run the Android app.
 
 ## 4. Set up the iOS app
 
