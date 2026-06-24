@@ -5,53 +5,66 @@ sidebar_position: 6
 
 # Util Package
 
-The **Util** package provides a set of utility classes, constants, and helpers used across the application — coroutine scopes, logging, UI messaging, and shared extensions.
+The **Util** package provides utility classes, constants, and helpers used across the app — coroutine scopes, logging, UI messaging, and shared extensions.
 
-![Util Package](/img/architecture_util.png)  
-
+```
+util/
+├── Constants.kt, Platform.kt, ApplicationScope.kt, UiStateHolder.kt, UiMessage.kt
+├── logging/       Logger.kt, NapierLogger.kt, …
+├── analytics/     Analytics.kt
+├── extensions/    DateTimeFormatExt.kt, ViewExt.kt, …
+├── file/          FileManager.kt
+├── permissions/   AppPermissionState.kt
+└── inappreview/   InAppReviewManager.kt
+```
 
 ## ApplicationScope
 
-The **ApplicationScope** class provides a `CoroutineScope` for running tasks that need to keep going while the app is open but aren't tied to a specific screen or feature. It's useful for background work that shouldn't be canceled when the user navigates away. Ex: fetching data on the background, sending analytics, refreshing user tokens.
-
+`ApplicationScope` provides a `CoroutineScope` for work that should keep running while the app
+is open but isn't tied to a specific screen — and shouldn't be canceled when the user navigates
+away. For example: background fetches, sending analytics, refreshing user tokens.
 
 ## UiStateHolder
 
-**UiStateHolder** is an abstract class extending `ViewModel` from `androidx.lifecycle`. It helps manage the state of UI screens. It provides a `uiStateHolderScope` extension property that delegates to `viewModelScope`, giving access to a coroutine scope for UI operations.
+`UiStateHolder` is an abstract class extending `ViewModel` from `androidx.lifecycle` that helps
+manage screen state. It exposes a `uiStateHolderScope` extension property delegating to
+`viewModelScope` for UI coroutine work.
 
 ## UiMessage
 
-**UiMessage** is a sealed interface used for representing UI messages:
+`UiMessage` is a sealed interface for UI messages:
 
-- **Resource**: Wraps string resources to be displayed in the UI.
-- **Message**: Wraps plain text messages.
+- `Resource` — wraps a string resource to display in the UI.
+- `Message` — wraps a plain-text message.
 
-UiMessage provides a `value` property, which can be accessed within Composables.
-
+It exposes a `value` property you can read inside composables.
 
 ## AppLogger
 
-**AppLogger** is an object implementing the **Logger** interface (delegating to *Napier* library). It initializes logging for the app and provides methods for logging errors, debug information, and general messages:
+`AppLogger` is an object implementing the `Logger` interface (delegating to the Napier library).
+It initializes logging and exposes methods for errors, debug output, and general messages:
 
-- `initialize(isDebug: Boolean)`: Initializes logging based on the build type.
-- `e(message, throwable, tag)`: Logs error messages.
-- `d(message, throwable, tag)`: Logs debug messages.
-- `i(message, throwable, tag)`: Logs informational messages.
+- `initialize(isDebug: Boolean)` — initializes logging based on the build type.
+- `e(message, throwable, tag)` — logs an error.
+- `d(message, throwable, tag)` — logs a debug message.
+- `i(message, throwable, tag)` — logs an informational message.
 
-The **AppLogger** is initialized at the application startup to handle centralized logging across the app.
+It's initialized at application startup for centralized logging.
 
 ## Constants
 
-The **Constants** object holds common constants used throughout the app:
+The `Constants` object holds app-wide constants:
 
-- **URL_PRIVACY_POLICY** and **URL_TERMS_CONDITIONS**: Links for privacy policy and terms & conditions.
-- **PAYWALL_PREMIUM_ACCESS**: Default entitlement/access level key for premium access is *"Premium"*.
-- **SHOW_REMOTE_PAYWALL**: A feature flag (in `FeatureFlagManager`) to toggle between remote and custom paywall screens. By default remote paywall UI is shown that can be updated from your subscription provider's dashboard or via Firebase Remote Config.
+- `URL_PRIVACY_POLICY` and `URL_TERMS_CONDITIONS` — privacy policy and terms & conditions links.
+- `PAYWALL_PREMIUM_ACCESS` — the default entitlement key for premium access (`Premium`).
+- `SHOW_REMOTE_PAYWALL` — a feature flag (in `FeatureFlagManager`) that toggles between the remote
+  and custom paywall screens. By default the remote paywall is shown, which you can update from your
+  subscription provider's dashboard or via Firebase Remote Config.
 
 ## Extensions
 
-The **Util** package also includes extension functions that simplify common operations.
+Extension functions that simplify common operations live in `util/extensions/`.
 
 ## Platform file
 
-If you need to implement platform-specific functionality, you can use Kotlin's *expect* and *actual* mechanisms in the *Platform* file.
+For platform-specific functionality, use Kotlin's `expect` / `actual` mechanism in `Platform.kt`.

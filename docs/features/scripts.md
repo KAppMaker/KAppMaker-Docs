@@ -175,4 +175,4 @@ Renders every `@Preview @StoreScreenshot` composable into upload-ready PNGs at A
 - Roborazzi captures each `@Preview @StoreScreenshot` at the dimensions declared in its `StoreDevice` enum value.
 - Output: `distribution/store_screenshots/<locale>/<device>/<tag>_<methodName>.png`.
 
-**Add a new screenshot** by writing a `@Preview @StoreScreenshot @Composable` function anywhere under `com.measify.kappmaker.*`. See [Store Screenshots](./store-screenshots.md) for the authoring pattern.
+**Add a new screenshot** by writing a `@Preview @StoreScreenshot @Composable` function anywhere under `com.kotlinfoundation.kmpstarterkit.*`. See [Store Screenshots](./store-screenshots.md) for the authoring pattern.

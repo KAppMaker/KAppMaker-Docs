@@ -4,7 +4,7 @@ sidebar_position: 21
 
 # Splash Screen
 
-KAppMaker ships a **native launch screen** on both Android and iOS — no third‑party library. Each
+KMPStarterKit ships a **native launch screen** on both Android and iOS — no third‑party library. Each
 platform uses its own built‑in mechanism, so the splash appears instantly at cold start before the
 Compose UI loads.
 

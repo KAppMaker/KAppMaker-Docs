@@ -4,26 +4,37 @@ sidebar_position: 4
 
 # Presentation Package
 
-![Presentation Package](/img/architecture_presentation.png)
+The **Presentation** package holds the app's user interface.
 
+```
+presentation/
+├── components/    reusable composables (toolbar, dialogs, ads, credit, premium)
+├── navigation/    Routes.kt, NavigationState.kt, Navigator.kt, AppNavigation.kt
+└── screens/       one folder per screen (home, gallery, account, paywall, onboarding, …)
+```
 
-The *Presentation* package manages the app's user interface (UI) and contains four sub-packages:
+The app's visual style — colors, typography, and light/dark themes — lives separately in the
+`designsystem` module, so it can be reused across modules.
 
-### Components
-Contains reusable UI elements like the toolbar, loading indicators, and dialogs to maintain consistent design across the app.
+### components
 
-### Theme
-Manages the app's appearance, including colors, typography (fonts), and themes (dark/light theme), allowing easy customization of the app's visual style.
+Reusable UI elements like the toolbar, loading indicators, and dialogs that keep the design
+consistent across the app.
 
-### Navigation
-Holds every navigation destination, the back-stack model, the `Navigator` API, and the root `AppNavigation` composable. Feature folders intentionally don't contain navigation glue — see the dedicated [Navigation](navigation) page for the full picture.
+### navigation
 
-### Screens
-Contains all the screens in the app. Each screen folder follows a structured setup:
+Every navigation destination, the back-stack model, the `Navigator` API, and the root
+`AppNavigation` composable. Feature folders intentionally contain no navigation glue — see the
+dedicated [Navigation](navigation.md) page for the full picture.
 
-- **Screen**: The main composable function for the UI.
-- **UiState**: Represents the current ui state of the screen, and also contains **UiEvent** to handle user actions and events on the screen.
-- **UiStateHolder (ViewModel)**: Manages the screen's state. `UiStateHolder` is an abstract class extending `ViewModel` from `androidx.lifecycle`. It interacts with the UiState and handles events (UiEvent) triggered by user actions.
+### screens
+
+Every screen in the app. Each screen folder follows the same structure:
+
+- `Screen` — the main composable for the UI.
+- `UiState` — the current state of the screen; it also defines `UiEvent`, the user actions the screen handles.
+- `UiStateHolder` — manages the screen's state. It's an abstract class extending `ViewModel`
+  from `androidx.lifecycle` that reads `UiState` and handles the `UiEvent`s triggered by the user.
 
 The route definitions and the wiring that connects each screen to the navigator (push targets, back behaviour, parameter passing) live in `presentation/navigation/Routes.kt` and `AppNavigation.kt`, not in the feature folder.
 

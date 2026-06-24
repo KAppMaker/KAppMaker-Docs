@@ -4,7 +4,7 @@ sidebar_position: 15
 
 # Logging
 
-You can log errors, info, debug messages using `AppLogger`. By default console logs will be turned off for relase builds.
+You can log errors, info, debug messages using `AppLogger`. By default console logs will be turned off for release builds.
 
 ## How To Use
 

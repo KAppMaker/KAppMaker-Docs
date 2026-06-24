@@ -1,24 +1,29 @@
 ---
 sidebar_position: 1
 slug: /
-title: What is KAppMaker?
+title: What is KMPStarterKit?
 ---
 
-KAppMaker is a Kotlin Multiplatform + Compose Multiplatform boilerplate starter kit for Android & iOS. It helps developers build apps faster with features like authentication, in-app purchases, and notifications, and more. KAppMaker simplifies development with shared logic and UI for both Android and iOS, allowing you to focus on building your app.
+# What is KMPStarterKit?
 
-## Key Features
+KMPStarterKit is a Kotlin Multiplatform + Compose Multiplatform boilerplate starter kit for
+Android and iOS (with JVM Desktop and Web/WASM targets too). It ships the features most apps
+need — authentication, in-app purchases, notifications, and more — so you can focus on building
+your product instead of the plumbing. Business logic and UI are shared across platforms.
 
-- **Multiplatform support**: Shared codebase for Android and iOS.
-- **Authentication**: Integrated Google and Apple authentication.
-- **In-app purchases**: Built-in support for subscriptions and purchases via RevenueCat.
-- **Notifications**: Local and push notifications for both platforms.
-- **In-App Rating**: Integration for collecting app ratings within the app.
-- **Network with Ktor**: Managing network operations with Ktor.
-- **Local Storage**: Local storage management for offline capabilities.
-- **User Preferences**: Manage user settings and preferences with ease.
-- **UI Components & Navigation**: Pre-built UI components and a navigation system for app flow.
-- **AI Integration**: Integration with Replicate AI models, Open AI Text/Image Analyzing, DALLE-2/DALLE-3 Image Generation. Secure API Key using Firebase Cloud Functions.
-- **App Landing Page Tempalate**: Pre-built UI components and a navigation system for app flow. Can be deployed into Firebase Hosting.
+## Key features
 
+- **Multiplatform** — one shared codebase for Android, iOS, Desktop, and Web.
+- **Authentication** — Google and Apple sign-in.
+- **In-app purchases** — subscriptions and one-off purchases behind a provider-agnostic API (Adapty by default, RevenueCat optional).
+- **Notifications** — local and push notifications on every platform.
+- **In-app review** — prompt users for a store rating without leaving the app.
+- **Networking** — a pre-configured Ktor HTTP client.
+- **Local storage** — an on-device database with Room 3, running on all platforms.
+- **User preferences** — type-safe key/value settings via DataStore.
+- **UI components & navigation** — a reusable design system plus Navigation 3 wiring.
+- **AI integration** — Replicate and OpenAI (text/image analysis, DALL·E image generation), with API keys kept secret behind Firebase Cloud Functions.
+- **Landing page template** — a marketing page you can deploy to Firebase Hosting.
 
-
+See the [Features Overview](./features/overview.md) for the full, grouped list — and start with
+[Set Up Your First App](./getting-started/first-app.mdx) to get running in about five minutes.

@@ -4,7 +4,7 @@ sidebar_position: 6
 
 # Local Storage
 
-KAppMaker uses [**Room 3**](https://developer.android.com/jetpack/androidx/releases/room3) for offline data persistence. With Room 3 the same `@Database`, `@Entity` and `@Dao` declarations live in `commonMain` and run on **Android, iOS, JVM Desktop, and Web (WASM)** — no per-platform abstraction layer is needed.
+KMPStarterKit uses [**Room 3**](https://developer.android.com/jetpack/androidx/releases/room3) for offline data persistence. With Room 3 the same `@Database`, `@Entity` and `@Dao` declarations live in `commonMain` and run on **Android, iOS, JVM Desktop, and Web (WASM)** — no per-platform abstraction layer is needed.
 
 ## Database Configuration
 

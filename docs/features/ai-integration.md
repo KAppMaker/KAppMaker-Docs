@@ -4,13 +4,13 @@ sidebar_position: 12
 
 # AI Integration
 
-Serverless backend built with Firebase Cloud Functions, for AI integrations like ChatGPT and Replicate AI. The AI Module in KAppMaker is ready to use with minimal setup. AI integration consists of two parts: the mobile (client) side and the backend side. We cannot directly use OpenAI or Replicate APIs on the mobile side because they require an API key, and storing API keys in client-side code is not secure. Therefore, we will add an API proxy using Firebase. Add your OpenAI or Replicate AI API keys to Google Secret Manager, deploy Firebase Cloud Functions, and set your `CLOUD_FUNCTIONS_URL` in `util/Constants` file. Firebase Cloud Functions are free to start with generous free limits, but be sure to set a budget limit to avoid unexpected charges. 
+Serverless backend built with Firebase Cloud Functions, for AI integrations like ChatGPT and Replicate AI. The AI Module in KMPStarterKit is ready to use with minimal setup. AI integration consists of two parts: the mobile (client) side and the backend side. We cannot directly use OpenAI or Replicate APIs on the mobile side because they require an API key, and storing API keys in client-side code is not secure. Therefore, we will add an API proxy using Firebase. Add your OpenAI or Replicate AI API keys to Google Secret Manager, deploy Firebase Cloud Functions, and set your `CLOUD_FUNCTIONS_URL` in `util/Constants` file. Firebase Cloud Functions are free to start with generous free limits, but be sure to set a budget limit to avoid unexpected charges. 
 
-You can also watch the video for AI Integration setup: [https://www.youtube.com/watch?v=pdDnzjz19w8](https://www.youtube.com/watch?v=pdDnzjz19w8)
+<YouTube id="pdDnzjz19w8" title="AI Integration setup" />
 
 ## Backend - Firebase Functions Setup
 
-Before starting, you need to initialize Firebase in your project. From the [KAppMaker-All](https://github.com/KAppMaker/KAppMaker-All) monorepo, navigate to **`Web/functions/`**:
+Before starting, you need to initialize Firebase in your project. From the [KAppMaker-All](https://github.com/KAppMaker/KAppMaker-All) monorepo, navigate to `Web/functions/`:
 
 
   ### 1. Install Firebase CLI

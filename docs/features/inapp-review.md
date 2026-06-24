@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # In-App Review/Rating
 
-KAppMaker includes a built-in **In-App Review** feature, allowing you to request user rating directly within your app. To help boost app ratings and visibility, in-app reviews are automatically triggered after a successful purchase. This is based on the insight that paying users are more likely to leave positive reviews at that moment.
+KMPStarterKit includes a built-in **In-App Review** feature, allowing you to request user rating directly within your app. To help boost app ratings and visibility, in-app reviews are automatically triggered after a successful purchase. This is based on the insight that paying users are more likely to leave positive reviews at that moment.
 
 
 > "Reviews are vital for app visibility and credibility."

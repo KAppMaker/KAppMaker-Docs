@@ -4,14 +4,14 @@ sidebar_position: 5
 
 # Navigation
 
-KAppMaker uses **Jetpack Navigation 3** (KMP build) — `org.jetbrains.androidx.navigation3`. Navigation 3 ditches the `NavController`/`NavGraph` model: you own the back stack as plain state, and a single `NavDisplay` renders whatever's on top.
+KMPStarterKit uses **Jetpack Navigation 3** (KMP build) — `org.jetbrains.androidx.navigation3`. Navigation 3 ditches the `NavController`/`NavGraph` model: you own the back stack as plain state, and a single `NavDisplay` renders whatever's on top.
 
 ## Where it lives
 
 All navigation code is consolidated under:
 
 ```
-shared/src/commonMain/kotlin/com/measify/kappmaker/presentation/navigation/
+shared/src/commonMain/kotlin/com/kotlinfoundation/kmpstarterkit/presentation/navigation/
 ├── Routes.kt           – every destination as a sealed @Serializable type
 ├── NavigationState.kt  – per-tab back stacks + active stack swap logic
 ├── Navigator.kt        – navigate / add / set / replace / switchToTab / goBack

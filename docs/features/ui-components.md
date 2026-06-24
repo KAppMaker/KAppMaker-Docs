@@ -3,7 +3,7 @@ sidebar_position: 9
 ---
 
 # UI Components
-KAppMaker comes with already built in to use UI components. These components are located in `designsystem` module. Also Compose Hot Reload feature is enabled to iterate quickly. You can see all available components in `AllComponentsGallery.kt` file located in `designsystem` module. In `designsystem/jvmMain` there is `Main.kt` file. When you run it you can see and search all reusable components, also it supports hot reload, meaning if you change something in component you can see changes. 
+KMPStarterKit comes with already built in to use UI components. These components are located in `designsystem` module. Also Compose Hot Reload feature is enabled to iterate quickly. You can see all available components in `AllComponentsGallery.kt` file located in `designsystem` module. In `designsystem/jvmMain` there is `Main.kt` file. When you run it you can see and search all reusable components, also it supports hot reload, meaning if you change something in component you can see changes. 
 
 ![All UI Components](/img/all_ui_components.png).   
 ![UI Components](/img/ui_components_1.png)    
@@ -27,7 +27,7 @@ NativeAlertDialog(
 
 ## How to access resources
 
-- For accessing resources in `designsystem` module, such as icons, texts you can use `UiRes.drawable.your_icon` or `UiRes.string.your_text`. For accessing resources in app module instead of `UiRes` just simply access with `Res` (ex: `Res.drawable.your_icon`. For simplicity you can even place all of your icons and string resources in `designsytem` module. This will make very easy for you to support multiple languages.
+- For accessing resources in `designsystem` module, such as icons, texts you can use `UiRes.drawable.your_icon` or `UiRes.string.your_text`. For accessing resources in app module instead of `UiRes` just simply access with `Res` (ex: `Res.drawable.your_icon`. For simplicity you can even place all of your icons and string resources in `designsystem` module. This will make very easy for you to support multiple languages.
 
 
 

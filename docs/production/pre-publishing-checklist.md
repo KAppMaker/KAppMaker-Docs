@@ -43,34 +43,27 @@ Before publishing your app, make sure you have completed all the steps below. Th
 
 ## 2. App Icons
 
-### Android
+- [ ] Replace the Android launcher icons. The easiest way is **Android Studio**:
+  1. Right-click `androidApp/src/main/res/` and choose **New > Image Asset**.
+  2. Choose your icon source image (at least 1024×1024 recommended).
+  3. Android Studio generates all required density sizes automatically.
 
-The easiest way to replace Android app icons is using **Android Studio**:
+  Icon files live in:
+  ```
+  androidApp/src/main/res/
+  ├── mipmap-hdpi/      ic_launcher.webp, ic_launcher_foreground.webp, ic_launcher_round.webp
+  ├── mipmap-mdpi/      ...
+  ├── mipmap-xhdpi/     ...
+  ├── mipmap-xxhdpi/    ...
+  ├── mipmap-xxxhdpi/   ...
+  └── mipmap-anydpi-v26/  ic_launcher.xml, ic_launcher_round.xml
+  ```
 
-1. Right-click on `androidApp/src/main/res/` in Android Studio
-2. Select **New > Image Asset**
-3. Choose your icon source image (at least 1024x1024 recommended)
-4. Android Studio will generate all required density sizes automatically
-
-Icon files are located in:
-```
-androidApp/src/main/res/
-├── mipmap-hdpi/      ic_launcher.webp, ic_launcher_foreground.webp, ic_launcher_round.webp
-├── mipmap-mdpi/      ...
-├── mipmap-xhdpi/     ...
-├── mipmap-xxhdpi/    ...
-├── mipmap-xxxhdpi/   ...
-└── mipmap-anydpi-v26/  ic_launcher.xml, ic_launcher_round.xml
-```
-
-### iOS
-
-Use [AppIcon.co](https://www.appicon.co/) to generate all required iOS icon sizes:
-
-1. Upload your icon (1024x1024 PNG recommended)
-2. Select **iPhone** and **iPad** platforms
-3. Download the generated icon set
-4. Replace all files in `iosApp/iosApp/Assets.xcassets/AppIcon.appiconset/`
+- [ ] Replace the iOS app icons. Generate the sizes with [AppIcon.co](https://www.appicon.co/):
+  1. Upload your icon (1024×1024 PNG recommended).
+  2. Select **iPhone** and **iPad**.
+  3. Download the generated icon set.
+  4. Replace all files in `iosApp/iosApp/Assets.xcassets/AppIcon.appiconset/`.
 
 ---
 
@@ -129,7 +122,7 @@ See the [Authentication](../features/auth.md) guide for full setup details.
 
 ## 8. local.properties API Keys
 
-Add the following keys to `MobileApp/local.properties`:
+- [ ] Add the following keys to `MobileApp/local.properties`:
 
 ```properties
 # Google Auth (required for Google Sign-In)
@@ -218,7 +211,7 @@ See the [Android Production](android.md) guide for details.
 
 ## 13. Publishing with Fastlane
 
-KAppMaker includes pre-configured Fastlane lanes for building and uploading to both stores. Run from `MobileApp/`:
+KMPStarterKit includes pre-configured Fastlane lanes for building and uploading to both stores. Run from `MobileApp/`:
 
 - [ ] **First Android upload** (generates keystore if needed, builds AAB for manual upload):
   ```bash
@@ -252,22 +245,8 @@ See [GitHub CI/CD](../features/github-ci-cd.md) for full setup.
 
 ---
 
-## Quick Reference: File Locations
+## File locations
 
-| What | File Path |
-|------|-----------|
-| Constants (URLs, emails) | `shared/src/commonMain/.../util/Constants.kt` |
-| API keys | `MobileApp/local.properties` |
-| Subscription provider | `MobileApp/gradle.properties` |
-| Feature flags | `shared/src/commonMain/.../data/source/featureflag/FeatureFlagManager.kt` |
-| Android icons | `androidApp/src/main/res/mipmap-*/` |
-| Android notification icon | `androidApp/src/main/res/drawable/ic_notification.xml` |
-| Android colors | `androidApp/src/main/res/values/colors.xml` |
-| Android manifest | `androidApp/src/main/AndroidManifest.xml` |
-| Android build config | `androidApp/build.gradle.kts` |
-| Android keystore | `distribution/android/keystore/` |
-| iOS icons | `iosApp/iosApp/Assets.xcassets/AppIcon.appiconset/` |
-| iOS project settings | `iosApp/iosApp.xcodeproj/project.pbxproj` |
-| iOS Info.plist | `iosApp/iosApp/Info.plist` |
-| Firebase Android | `androidApp/google-services.json` |
-| Firebase iOS | `iosApp/iosApp/GoogleService-Info.plist` |
+Every path referenced above is collected in the
+[Configuration File Reference](../file-locations.md) — handy to keep open while
+you work through this checklist.
