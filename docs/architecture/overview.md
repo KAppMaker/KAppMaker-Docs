@@ -53,12 +53,3 @@ com.kotlinfoundation.kmpstarterkit
 
 - **[Util](util.md)** — cross-cutting helpers: logging, coroutine scopes, constants,
   extensions, and `expect`/`actual` platform code.
-
-<details>
-<summary>Visual diagrams</summary>
-
-<img src="/img/architecture_1.png" alt="High-level architecture of KMPStarterKit" style={{maxWidth: '100%', marginBottom: '1rem'}} />
-<img src="/img/architecture_2.png" alt="High-level architecture of KMPStarterKit" style={{maxWidth: '100%', marginBottom: '1rem'}} />
-<img src="/img/architecture_3.png" alt="High-level architecture of KMPStarterKit" style={{maxWidth: '100%'}} />
-
-</details>
