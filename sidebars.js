@@ -20,8 +20,6 @@ const sidebars = {
       items: ['getting-started/first-app'],
     },
 
-    'file-locations',
-
     {
       type: 'category',
       label: 'Features',
@@ -98,6 +96,8 @@ const sidebars = {
         'production/fastlane',
       ],
     },
+
+    'file-locations',
   ],
 };
 
