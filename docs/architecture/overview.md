@@ -8,7 +8,7 @@ KMPStarterKit follows a layered architecture with a single, one-way dependency
 flow. Each layer depends only on the one below it:
 
 ```
-Presentation   screens, UiStateHolders, components, navigation
+Presentation   screens, ViewModels, components, navigation
      │  depends on
 Domain         models, exceptions, use cases (only when justified)
      │  depends on
@@ -43,7 +43,7 @@ com.kotlinfoundation.kmpstarterkit
   - `usecase/` — use cases, added only when real orchestration is needed.
 
 - **[Presentation](presentation.md)** — the UI.
-  - `screens/` — one folder per screen, each with its `Screen`, `UiState`, and `UiStateHolder`.
+  - `screens/` — one folder per screen, each with its `Screen`, `UiState`, and `ViewModel`.
   - `components/` — reusable composables shared across screens.
   - `navigation/` — see the dedicated [Navigation](navigation.md) page.
 

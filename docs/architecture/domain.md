@@ -31,7 +31,7 @@ Immutable `data class`es representing core business entities:
 Domain-specific exceptions for known error scenarios:
 
 - `UnAuthorizedException` — the user tried to perform an operation while logged out. Catch
-  it in your `UiStateHolder` and navigate to the sign-in screen — see `ProfileUiStateHolder`
+  it in your `ViewModel` and navigate to the sign-in screen — see `ProfileViewModel`
   for an example.
 - `PurchaseRequiredException` — the operation requires a premium subscription the user doesn't have.
 - `CreditRequiredException` — the operation requires more credits than the user's balance.

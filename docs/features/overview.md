@@ -39,7 +39,7 @@ Kotlin APIs, utilities, and UI you build your app with.
 | [User Preferences](./user-preferences.md) | Type-safe key/value storage via DataStore (`UserPreferences`). |
 | [Network](./network.md) | HTTP via a pre-configured Ktor client. |
 | [UI Components](./ui-components.md) | A reusable design-system component library. |
-| [Screen Generator](./screen-generator.md) | Scaffold a new screen (Screen + UiState + UiStateHolder) wired into navigation and DI. |
+| [Screen Generator](./screen-generator.md) | Scaffold a new screen (Screen + UiState + ViewModel) wired into navigation and DI. |
 | [Feature Flag / Remote Config](./feature-flag.md) | Toggle features locally or remotely via Firebase Remote Config. |
 | [Runtime Permissions](./permissions.md) | Permission requests via a single `AppPermissionState` API. |
 | [Logging](./logging.md) | Multiplatform logging via `AppLogger` (backed by Napier). |

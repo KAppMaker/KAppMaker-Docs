@@ -18,7 +18,7 @@ shared/src/commonMain/kotlin/com/kotlinfoundation/kmpstarterkit/presentation/nav
 └── AppNavigation.kt    – NavDisplay setup + the entryProvider with all entry blocks
 ```
 
-Feature folders under `presentation/screens/<feature>/` only contain screen components (`*Screen.kt`, `*UiState.kt`, `*UiStateHolder.kt`) — no navigation glue.
+Feature folders under `presentation/screens/<feature>/` only contain screen components (`*Screen.kt`, `*UiState.kt`, `*ViewModel.kt`) — no navigation glue.
 
 ## Routes
 
@@ -83,17 +83,17 @@ navigator.navigate(PaywallScreenRoute)
 
 ```kotlin
 entry<HomeScreenRoute>(metadata = noAnimationMetadata) {
-    val holder = uiStateHolder<HomeUiStateHolder>()
+    val viewModel = koinViewModel<HomeViewModel>()
     HomeScreen(
-        uiStateHolder = holder,
+        viewModel = viewModel,
         onPremiumRequired = { navigator.navigate(PaywallScreenRoute) },
         // ...
     )
 }
 
 entry<GenerationResultScreenRoute> { key ->
-    val holder = uiStateHolder<GenerationResultUiStateHolder>(parameters = { parametersOf(key.id) })
-    GenerationResultScreen(uiStateHolder = holder, onNavigateToBack = { navigator.goBack() })
+    val viewModel = koinViewModel<GenerationResultViewModel>(parameters = { parametersOf(key.id) })
+    GenerationResultScreen(viewModel = viewModel, onNavigateToBack = { navigator.goBack() })
 }
 ```
 
@@ -109,7 +109,7 @@ Run the generator from `MobileApp/`:
 ./scripts/generate_screen.sh Settings
 ```
 
-It creates `SettingsScreen.kt`, `SettingsUiState.kt`, `SettingsUiStateHolder.kt` under `presentation/screens/settings/`, registers the route in `Routes.kt`, inserts a stub `entry<SettingsScreenRoute> { … }` in `AppNavigation.kt`, and adds `viewModelOf(::SettingsUiStateHolder)` to `root/Di.kt`.
+It creates `SettingsScreen.kt`, `SettingsUiState.kt`, `SettingsViewModel.kt` under `presentation/screens/settings/`, registers the route in `Routes.kt`, inserts a stub `entry<SettingsScreenRoute> { … }` in `AppNavigation.kt`, and adds `viewModelOf(::SettingsViewModel)` to `root/Di.kt`.
 
 After it runs, edit the generated `entry<>` block in `AppNavigation.kt` to wire any navigation callbacks the screen needs (`onSomething = { navigator.navigate(SomeRoute) }`).
 
