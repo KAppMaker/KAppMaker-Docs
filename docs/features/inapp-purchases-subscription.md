@@ -73,7 +73,7 @@ The custom paywall lives at `shared/src/commonMain/kotlin/com/kotlinfoundation/k
 ```
 PaywallScreen.kt              # router — overlays + dispatches to a child screen
 PaywallUiState.kt             # state, events, package UI state, mode enum
-PaywallUiStateHolder.kt       # lifecycle: fetch / select / buy / restore
+PaywallViewModel.kt       # lifecycle: fetch / select / buy / restore
 PaywallUiStateMapper.kt       # pure: PurchasePackage[] → PaywallUiState slice
 PaywallPreviewData.kt         # @Preview fixtures
 subscription/SubscriptionPaywallScreen.kt
@@ -89,7 +89,7 @@ creditpack/CreditPackPaywallScreen.kt
 
 It also exposes `pickDefaultSelection(...)` so the user lands on the BEST VALUE / SAVE N% plan — the same package that wears the chip — instead of the cheapest.
 
-**`PaywallUiStateHolder`** stays thin: it owns the `StateFlow<PaywallUiState>`, calls the repository, dispatches purchase events, and calls `mapper.map(...)` whenever packages or selection change.
+**`PaywallViewModel`** stays thin: it owns the `StateFlow<PaywallUiState>`, calls the repository, dispatches purchase events, and calls `mapper.map(...)` whenever packages or selection change.
 
 **`PaywallScreen`** is a one-shot router. It owns the `SuccessfulPurchaseView` overlay and the error dialog, then dispatches based on `uiState.mode`:
 
@@ -108,7 +108,7 @@ navigator.navigate(
 )
 ```
 
-`PaywallUiStateHolder` reads the placement id, derives a `PaywallMode`, and the mapper picks the right code path (subscription cards vs. credit-pack rows, different default-selection rules, different CTA / reassurance copy).
+`PaywallViewModel` reads the placement id, derives a `PaywallMode`, and the mapper picks the right code path (subscription cards vs. credit-pack rows, different default-selection rules, different CTA / reassurance copy).
 
 To introduce a brand-new placement type:
 

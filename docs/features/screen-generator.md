@@ -25,7 +25,7 @@ The following default suffixes are used in the generation process:
 - **Screen Suffix**: Screen
 - **UI State Suffix**: UiState
 - **UI Event Suffix**: UiEvent
-- **ViewModel Suffix**: UiStateHolder
+- **ViewModel Suffix**: ViewModel
 
 
 ## What it does
@@ -34,15 +34,15 @@ The script generates three files in `presentation/screens/yourscreenname/`:
 
 - `YourScreenNameScreen.kt`
 - `YourScreenNameUiState.kt` (also contains `UiEvent`)
-- `YourScreenNameUiStateHolder.kt`
+- `YourScreenNameViewModel.kt`
 
 It then patches three existing files (each insertion is idempotent — safe to re-run):
 
 | File                                       | What gets inserted                                                            |
 |--------------------------------------------|-------------------------------------------------------------------------------|
 | `presentation/navigation/Routes.kt`         | `data object YourScreenNameScreenRoute : ScreenRoute` (with `@Serializable`/`@SerialName`) |
-| `presentation/navigation/AppNavigation.kt`  | An `entry<YourScreenNameScreenRoute> { … }` block plus the screen/holder imports |
-| `root/Di.kt`                                | `viewModelOf(::YourScreenNameUiStateHolder)` plus the holder import           |
+| `presentation/navigation/AppNavigation.kt`  | An `entry<YourScreenNameScreenRoute> { … }` block plus the screen/viewModel imports |
+| `root/Di.kt`                                | `viewModelOf(::YourScreenNameViewModel)` plus the viewModel import           |
 
 The insertion points are marked in each file by a `// Add new … below — generate_screen.sh inserts here.` comment. Don't remove those markers — the script grep-checks them and warns if they're missing.
 
@@ -55,8 +55,8 @@ The generated `entry<>` block is a no-callback stub:
 
 ```kotlin
 entry<YourScreenNameScreenRoute> {
-    val holder = uiStateHolder<YourScreenNameUiStateHolder>()
-    YourScreenNameScreen(uiStateHolder = holder)
+    val viewModel = koinViewModel<YourScreenNameViewModel>()
+    YourScreenNameScreen(viewModel = viewModel)
 }
 ```
 

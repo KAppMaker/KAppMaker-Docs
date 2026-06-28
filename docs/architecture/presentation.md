@@ -33,30 +33,30 @@ Every screen in the app. Each screen folder follows the same structure:
 
 - `Screen` — the main composable for the UI.
 - `UiState` — the current state of the screen; it also defines `UiEvent`, the user actions the screen handles.
-- `UiStateHolder` — manages the screen's state. It's an abstract class extending `ViewModel`
-  from `androidx.lifecycle` that reads `UiState` and handles the `UiEvent`s triggered by the user.
+- `ViewModel` — manages the screen's state. Extends `ViewModel` from `androidx.lifecycle`,
+  reads `UiState`, and handles the `UiEvent`s triggered by the user.
 
 The route definitions and the wiring that connects each screen to the navigator (push targets, back behaviour, parameter passing) live in `presentation/navigation/Routes.kt` and `AppNavigation.kt`, not in the feature folder.
 
-For new screens, extend the `UiStateHolder` class. When you need to call a suspend function, do so within the `uiStateHolderScope.launch`, which delegates to `viewModelScope`.
+For new screens, extend the `ViewModel` class from `androidx.lifecycle`. When you need to call a suspend function, launch it within `viewModelScope`.
 
 ```kotlin
-class NewUiStateHolder() : UiStateHolder() {
-    fun testFunction() = uiStateHolderScope.launch {
+class NewViewModel() : ViewModel() {
+    fun testFunction() = viewModelScope.launch {
         //Call suspend function
     }
 }
 ```
 
-To obtain a holder instance inside the `entry<…>` block in `AppNavigation.kt`, use the `uiStateHolder` helper:
+To obtain a ViewModel instance inside the `entry<…>` block in `AppNavigation.kt`, use Koin's `koinViewModel` helper:
 
 ```kotlin
 entry<OnBoardingScreenRoute> {
-    val holder = uiStateHolder<OnBoardingUiStateHolder>()
-    OnBoardingScreen(uiStateHolder = holder, /* … */)
+    val viewModel = koinViewModel<OnBoardingViewModel>()
+    OnBoardingScreen(viewModel = viewModel, /* … */)
 }
 ```
 
-The Navigation 3 entry decorator scopes ViewModels to their `NavEntry`, so each holder lives as long as its destination is on the back stack and is cleared automatically when popped — no separate "navigator-scoped" helper needed.
+The Navigation 3 entry decorator scopes ViewModels to their `NavEntry`, so each viewModel lives as long as its destination is on the back stack and is cleared automatically when popped — no separate "navigator-scoped" helper needed.
 
-Ensure that the DI setup is done in `root/Di.kt` within the `presentationModule`, for example, by adding `viewModelOf(::NewUiStateHolder)` to handle dependencies for the new *UiStateHolder*.
+Ensure that the DI setup is done in `root/Di.kt` within the `presentationModule`, for example, by adding `viewModelOf(::NewViewModel)` to handle dependencies for the new *ViewModel*.

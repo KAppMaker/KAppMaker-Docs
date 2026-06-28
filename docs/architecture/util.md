@@ -9,7 +9,7 @@ The **Util** package provides utility classes, constants, and helpers used acros
 
 ```
 util/
-├── Constants.kt, Platform.kt, ApplicationScope.kt, UiStateHolder.kt, UiMessage.kt
+├── Constants.kt, Platform.kt, ApplicationScope.kt, UiMessage.kt
 ├── logging/       Logger.kt, NapierLogger.kt, …
 ├── analytics/     Analytics.kt
 ├── extensions/    DateTimeFormatExt.kt, ViewExt.kt, …
@@ -23,12 +23,6 @@ util/
 `ApplicationScope` provides a `CoroutineScope` for work that should keep running while the app
 is open but isn't tied to a specific screen — and shouldn't be canceled when the user navigates
 away. For example: background fetches, sending analytics, refreshing user tokens.
-
-## UiStateHolder
-
-`UiStateHolder` is an abstract class extending `ViewModel` from `androidx.lifecycle` that helps
-manage screen state. It exposes a `uiStateHolderScope` extension property delegating to
-`viewModelScope` for UI coroutine work.
 
 ## UiMessage
 

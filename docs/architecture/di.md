@@ -15,7 +15,7 @@ These are the Koin APIs you reach for when registering dependencies in KMPStarte
 - `factory` — creates a new instance every time it's injected.
 - `singleOf` / `factoryOf` — the constructor-reference DSL form of `single` / `factory` (e.g. `singleOf(::UserRepository)`).
 - `bind` — binds the instance to an interface or superclass. Example: `singleOf(::UserPreferencesImpl) bind UserPreferences::class`.
-- `viewModelOf` — registers a `UiStateHolder` (ViewModel) in the presentation module. Example: `viewModelOf(::HomeUiStateHolder)`.
+- `viewModelOf` — registers a `ViewModel` in the presentation module. Example: `viewModelOf(::HomeViewModel)`.
 
 
 ## Example of DI Setup
@@ -28,7 +28,7 @@ In this project, the DI setup includes multiple modules:
   - **Singletons**: `ApplicationScope`, `UserRepository`, `UserPreferences`.
   - **Factories**: For objects like `ApiService` and `BackgroundExecutor`.
 
-- **Presentation Module**: Handles UI-related objects like `UiStateHolders` (ViewModel) for different screens. UiStateHolders are registered using `viewModelOf()`, for example: `viewModelOf(::OnBoardingUiStateHolder)`, `viewModelOf(::ProfileUiStateHolder)`, `viewModelOf(::PaywallUiStateHolder)`.
+- **Presentation Module**: Handles UI-related objects like `ViewModels` for different screens. ViewModels are registered using `viewModelOf()`, for example: `viewModelOf(::OnBoardingViewModel)`, `viewModelOf(::ProfileViewModel)`, `viewModelOf(::PaywallViewModel)`.
 
 
 ## Platform-Specific DI

@@ -25,7 +25,7 @@ Rule overrides live in the root `MobileApp/build.gradle.kts` — Compose-friendl
 ## Unit & Compose UI Tests
 
 Test source layout:
-- `shared/src/commonTest/` — runs on both `:shared:jvmTest` and `:shared:testAndroidHostTest`. Use this for repository, use-case, and `UiStateHolder` tests.
+- `shared/src/commonTest/` — runs on both `:shared:jvmTest` and `:shared:testAndroidHostTest`. Use this for repository, use-case, and `ViewModel` tests.
 - `shared/src/jvmTest/` — JVM-only. Use for headless Compose UI tests via `runComposeUiTest` (the multiplatform Compose test API).
 - `shared/src/androidHostTest/` — Robolectric / Roborazzi screenshot tests + goldens (`snapshots/`).
 
@@ -47,7 +47,7 @@ fun `executor returns success result`() = runTest {
 }
 ```
 
-**StateFlow / UiStateHolder tests** — collect emissions with `kotlinx-coroutines-test` (no Turbine needed). Override `Dispatchers.Main` so `viewModelScope` runs on a `TestDispatcher`:
+**StateFlow / ViewModel tests** — collect emissions with `kotlinx-coroutines-test` (no Turbine needed). Override `Dispatchers.Main` so `viewModelScope` runs on a `TestDispatcher`:
 
 ```kotlin
 @BeforeTest fun setUp() { Dispatchers.setMain(StandardTestDispatcher()) }
@@ -55,12 +55,12 @@ fun `executor returns success result`() = runTest {
 
 @Test
 fun `incrementing emits initial then updated state`() = runTest {
-    val holder = SampleCounterUiStateHolder()
+    val viewModel = SampleCounterViewModel()
     val emissions = mutableListOf<SampleCounterUiState>()
     val job = launch(UnconfinedTestDispatcher(testScheduler)) {
-        holder.uiState.toList(emissions)
+        viewModel.uiState.toList(emissions)
     }
-    holder.onUiEvent(Increment); holder.onUiEvent(Increment)
+    viewModel.onUiEvent(Increment); viewModel.onUiEvent(Increment)
     advanceUntilIdle()
     assertEquals(SampleCounterUiState(count = 2), emissions.last())
     job.cancel()
